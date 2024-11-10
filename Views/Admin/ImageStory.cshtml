@@ -1,0 +1,35 @@
+﻿
+@{
+    Layout = null;
+}
+
+<link href="~/Content/css/login.css" rel="stylesheet" />
+<div class="container">
+    <div class="home-button">
+        <a href="@Url.Action("Detail", "Detail", new { id = ViewBag.ProductID })">
+            <img src="~/Content/images/back.png" alt="Back" />
+        </a>
+    </div>
+    <h2>Thêm Ảnh</h2>
+
+    @if (!string.IsNullOrEmpty(ViewBag.Error))
+    {
+        <div class="error-message">
+            @ViewBag.Error
+        </div>
+    }
+
+    <form action="@Url.Action("ImageStory", "Admin", new { chapterId = ViewBag.ChapterID })" method="post" enctype="multipart/form-data">
+
+        <input type="hidden" name="chapterId" value="@ViewBag.ChapterID" />
+        <input type="hidden" name="productId" value="@ViewBag.ProductID" />
+
+        <label for="image">Chọn ảnh từ máy tính:</label>
+        <input type="file" name="imageFile" id="image" accept="image/*" required />
+
+        <label for="imageorder">Thứ tự ảnh:</label>
+        <input type="number" id="imageorder" name="ImageOrder" required />
+
+        <button type="submit" class="btn btn-primary">Tải lên</button>
+    </form>
+</div>

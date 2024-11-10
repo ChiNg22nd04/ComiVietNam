@@ -1,0 +1,230 @@
+﻿/* CSS cho header */
+header {
+    background-color: #e1814c;
+    width: 100vw; /* Chiều rộng bằng 100% của màn hình */
+    position: fixed; /* Đặt header cố định trên cùng */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Đảm bảo header luôn ở trên cùng */
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+
+/* Khoảng trống phía trên nội dung để không bị header che */
+body {
+    padding-top: 100px; /* Điều chỉnh để không bị header che khuất nội dung */
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 96vw; /* Đảm bảo nội dung bên trong không sát mép màn hình */
+    margin: 0 auto; /* Căn giữa nội dung của header */
+}
+
+.logo {
+    color: white;
+    font-size: 24px;
+}
+/* Định dạng cho menu navigation */
+nav {
+    display: flex; /* Sử dụng flexbox cho menu */
+    justify-content: center; /* Căn giữa menu */
+}
+
+    nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+
+     /*   nav ul li {
+            margin-right: 50px;
+        }*/
+.margin-right {
+    margin-right: 50px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+
+/* Định dạng search bar */
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: flex-end; /* Căn phải thanh tìm kiếm */
+}
+
+    .search-bar input {
+        padding: 8px;
+        border-radius: 25px;
+        border: 1px solid #ccc;
+        outline: none;
+        width: 350px;
+        padding-left: 15px;
+        transition: border 0.3s ease;
+    }
+
+        .search-bar input:focus {
+            border: 1px solid #4CAF50;
+        }
+
+    /* Nút kính lúp */
+    .search-bar button {
+        background-color: transparent;
+        border: none; /* No border */
+        cursor: pointer;
+        border-radius: 50%; /* Round button */
+        transition: background-color 0.3s ease; /* Add transition effect */
+    }
+
+        /* Hiệu ứng hover cho nút kính lúp */
+        .search-bar button:hover {
+            background-color: #ff8a80; /* Nền màu xanh lá khi hover */
+            color: white; /* Màu biểu tượng kính lúp đổi sang trắng khi hover */
+        }
+
+        .search-bar button i {
+            color: white; /* Màu mặc định của kính lúp */
+            transition: color 0.3s ease;
+        }
+
+        /* Đổi màu kính lúp khi hover */
+        .search-bar button:hover i {
+            color: white;
+        }
+
+        .search-bar button .search-icon {
+            width: 20px; /* Set width for the icon */
+            height: 20px; /* Set height for the icon */
+            vertical-align: middle; /* Align icon vertically */
+        }
+
+/* CSS cho dropdown menu */
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    position: relative; /* Thêm để đảm bảo menu con định vị đúng */
+}
+
+    nav ul li {
+        position: relative; /* Để dropdown con có thể định vị dựa trên cha */
+    }
+
+
+
+/* Ẩn dropdown menu khi chưa hover */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: -50px;
+    /*left: 0;*/
+    background-color: #e1814c;
+    padding: 10px;
+    margin: 0;
+    list-style-type: none;
+    /*margin-top: 10px;*/
+    min-width: 150px;
+    column-count: 1; /* Bắt đầu với 1 cột */
+    column-gap: 10px; /* Khoảng cách giữa các cột */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+    .dropdown-menu li {
+        break-inside: avoid; /* Ngăn các mục bị chia cắt giữa các cột */
+        page-break-inside: avoid; /* Hỗ trợ cho các trình duyệt cũ */
+        padding: 5px 0;
+    }
+.text-dark {
+    color:#fff;
+    font-weight: 500;
+}
+.icon23 {
+    font-size: 23px;
+}
+.dropdown-menu li a {
+    padding: 10px;
+    display: block;
+    text-decoration: none;
+    white-space: nowrap; /* Giữ chữ không xuống dòng */
+}
+
+            .dropdown-menu li a:hover {
+                background-color: #555; /* Đổi màu khi hover vào item của dropdown */
+            }
+
+/* Hiển thị dropdown menu khi hover vào mục cha */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+/* Sử dụng CSS để tạo nhiều cột dựa trên số lượng mục */
+.dropdown-menu:has(li:nth-child(7)) {
+    column-count: 2;
+    min-width: 300px;
+}
+
+.dropdown-menu:has(li:nth-child(13)) {
+    column-count: 3;
+    min-width: 450px;
+}
+
+.dropdown-menu:has(li:nth-child(19)) {
+    column-count: 4;
+    min-width: 600px;
+}
+
+/* Đảm bảo dropdown menu không vượt quá màn hình */
+@media (max-width: 768px) {
+    .dropdown-menu {
+        max-width: 90vw;
+        column-count: 2 !important;
+    }
+}
+
+/* Định dạng cho menu dropdown */
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+    .user-dropdown .arrow {
+        font-size: 12px; /* Kích thước của mũi tên */
+        margin-left: 5px; /* Khoảng cách giữa icon và mũi tên */
+    }
+
+    /* Menu dropdown mặc định sẽ bị ẩn */
+    .user-dropdown .dropdown-menu {
+        display: none;
+        position: absolute;
+        background-color: #e1814c;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+        /* Các mục bên trong dropdown */
+        .user-dropdown .dropdown-menu li {
+            padding: 5px 5px;
+            cursor: pointer;
+        }
+
+            .user-dropdown .dropdown-menu li a {
+                color: white;
+                text-decoration: none;
+                display: block;
+            }
+
+    /* Hiển thị menu dropdown khi user-hover */
+    .user-dropdown:hover .dropdown-menu {
+        display: block;
+    }

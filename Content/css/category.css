@@ -1,0 +1,197 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: #333;
+    padding: 20px;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 96vw;
+    margin: 0 auto;
+    color: white;
+}
+
+.logo {
+    font-size: 24px;
+}
+
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+    .user-info a {
+        color: white;
+        margin-left: 15px;
+        text-decoration: none;
+    }
+
+.content-container {
+    flex: 1; /* Đẩy footer xuống cuối trang */
+    padding-top: 80px; /* Để tránh bị header che khuất */
+    margin: 20px auto;
+    width: 90vw;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+}
+
+/* Thêm style cho bảng quản lý thể loại */
+.category-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+}
+
+    .category-table th, .category-table td {
+        border: 1px solid #dddddd;
+        padding: 12px 15px;
+    }
+
+    .category-table th {
+        background-color: #f2f2f2;
+    }
+
+    .category-table tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .category-table tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+.btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.btn-add {
+    background-color: #4CAF50; /* Màu xanh cho nút thêm mới */
+}
+
+.btn-edit {
+    background-color: #2196F3; /* Màu xanh dương cho nút sửa */
+}
+
+.btn-delete {
+    background-color: #f44336; /* Màu đỏ cho nút xóa */
+}
+
+.add-category {
+    margin: 20px 0;
+}
+
+    .add-category .btn-add {
+        display: inline-block;
+    }
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+/* Thêm style cho thông báo không có thể loại */
+.no-story {
+    margin-top: 20px;
+    color: #888; /* Màu chữ cho thông báo */
+}
+
+.back-list {
+    position: fixed; /* Giữ cố định vị trí trên trang */
+    color: white; /* Màu chữ trắng */
+    background-color: #333; /* Màu nền xanh lá */
+    padding: 10px 20px; /* Padding cho nút */
+    border-radius: 4px; /* Bo góc */
+    cursor: pointer; /* Đổi con trỏ thành tay khi hover */
+}
+
+    .back-list a {
+        text-decoration: none; /* Loại bỏ gạch chân của đường link */
+        color: white; /* Đảm bảo màu chữ của link là màu trắng */
+    }
+/* Thêm style cho form thêm người dùng */
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px; /* Giới hạn chiều rộng của form */
+    margin: 40px auto; /* Căn giữa form */
+}
+
+    form label {
+        display: block;
+        margin-top: 10px;
+    }
+
+    form input, form select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    form button {
+        width: 100%;
+        padding: 10px;
+        background-color: #28a745;
+        border: none;
+        color: white;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 16px; /* Cỡ chữ cho nút */
+        margin-top: 20px;
+    }
+
+        form button:hover {
+            background-color: #218838;
+        }
+.back-list {
+    position: fixed; /* Giữ cố định vị trí trên trang */
+    color: white; /* Màu chữ trắng */
+    background-color: #333; /* Màu nền xanh lá */
+    padding: 10px 20px; /* Padding cho nút */
+    border-radius: 4px; /* Bo góc */
+    cursor: pointer; /* Đổi con trỏ thành tay khi hover */
+}
+
+    .back-list a {
+        text-decoration: none; /* Loại bỏ gạch chân của đường link */
+        color: white; /* Đảm bảo màu chữ của link là màu trắng */
+    }

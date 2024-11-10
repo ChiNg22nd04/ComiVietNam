@@ -1,0 +1,57 @@
+﻿@model DAPM2.Models.WishlistViewModel
+
+@{
+    ViewBag.Title = "Danh Sách Theo Dõi";
+    Layout = "~/Views/Shared/_HistoryPage.cshtml";
+}
+
+<div class="content-container">
+    <div class="story-section">
+        <h2>Danh Sách Theo Dõi</h2>
+
+        @if (Model.Products != null && Model.Products.Count > 0)
+        {
+            <ul class="story-list">
+                @foreach (var story in Model.Products)
+                {
+                    <li class="story-item">
+                        <a href="@Url.Action("Detail", "Detail", new { id = story.ProductID })">
+                            <img src="@story.ImageProcductURL" alt="@story.Title" width="100" />
+                            <h3>@story.Title</h3>
+                        </a>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>Không có lịch sử đọc nào.</p>
+        }
+
+        <div class="pagination">
+            @if (Model.TotalPages > 1)
+            {
+                for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    if (i == Model.CurrentPage)
+                    {
+                        <button class="active">@i</button>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Wishlist", "Wishlist", new { page = i })">
+                            <button>@i</button>
+                        </a>
+                    }
+                }
+            }
+        </div>
+    </div>
+
+    <div class="highlight-section">
+        <h2>Nổi Bật</h2>
+        <div class="highlight-item selected">Top 1</div>
+        <div class="highlight-item">Top 2</div>
+        <div class="highlight-item">Top 3</div>
+    </div>
+</div>

@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/css/detail-story.css" rel="stylesheet" />
+    <link href="~/Content/css/footer.css" rel="stylesheet" />
+    <link href="~/Content/css/header.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <div class="header-container">
+                <img src="~/Content/images/comiCover.png" style="width: 10%; margin-left: 20px" />
+                <nav>
+                    <ul>
+                        <li class="margin-right"><a href="@Url.Action("Index", "Home")">Trang Chủ</a></li>
+                        <li class="dropdown margin-right">
+                            <a href="#">Thể Loại</a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="@Url.Action("AllStory", "AllStory", new { categoryID = 0 })">
+                                        Tất cả
+                                    </a>
+                                </li>
+                                @foreach (var category in Model.Categories)
+                                {
+                                    <li>
+                                        <a href="@Url.Action("ListStory", "Story", new { categoryID = category.CategoryID })">
+                                            @category.CategoryName
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                        <li class="margin-right">
+                            @if (Session["Username"] != null)
+                            {
+                                <a href="@Url.Action("Wishlist", "Wishlist")">Theo Dõi</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Login", "Login")">Theo Dõi</a>
+                            }
+                        </li>
+                        <li class="margin-right">
+                            @if (Session["Username"] != null)
+                            {
+                                <a href="@Url.Action("HistoryReading", "History", new { categoryID = 0, productID = 0 })">Lịch Sử</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Login", "Login")">Lịch Sử</a>
+                            }
+                        </li>
+
+
+                        @if (Session["RoleUser"] != null && Session["RoleUser"].ToString() == "Admin")
+                        {
+                            <li class="margin-right"><a href="@Url.Action("Dashboard", "Admin")">Admin</a></li>
+                        }
+                    </ul>
+                </nav>
+
+                <div class="search-bar">
+                    @using (Html.BeginForm("Search", "Home", FormMethod.Get))
+                    {
+                        <input class="field" type="text" name="searchTerm" placeholder="Tìm kiếm..." />
+                        <button type="submit">
+                            <img src="~/Content/images/search.png" alt="Search" class="search-icon" />
+                        </button>
+                    }
+                </div>
+                <nav class="reg">
+                    <ul>
+                        @if (Session["Username"] != null)
+                        {
+                            <li class="user-dropdown margin-right">
+                                <a href="#" class="user-icon">
+                                    <!-- Thêm ảnh đại diện -->
+                                    <i class="fa-solid fa-user" style="margin-right: 5px"></i>
+                                    <!-- Hiển thị email và mũi tên -->
+                                    @Session["FullName"] <span class="arrow">▼</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="@Url.Action("ProfileUser", "Profile")">Thông Tin Tài Khoản</a>
+                                    </li>
+                                    <li><a href="#">Cài Đặt</a></li>
+                                    <li><a href="#">Hỗ Trợ</a></li>
+                                    <li><a href="@Url.Action("Logout", "Login")">Đăng Xuất</a></li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="reg margin-right"><a href="@Url.Action("Login", "Login")">Đăng Nhập</a></li>
+                        }
+                    </ul>
+
+                </nav>
+
+            </div>
+        </header>
+        <div class="content">
+            @RenderBody()
+        </div>
+        <footer>
+            <div class="end">
+                <div class="footer-left">
+                    <img src="~/Content/images/comiCover.png" style="width: 60%" />
+                    <div class="footer-left_list">
+                        <div class="footer-left_item box1">
+                            Mạng xã hội chia sẻ các nội dung video giải trí chất lượng cao, phù hợp mọi độ tuổi và an toàn cho trẻ em.
+                        </div>
+                        <div class="footer-left_item">
+                            <img width="30%" height="30%" src="https://cdn.popsww.com/popsapp/assets/images/icons/appstore.png?format=webp" />
+                            <img width="30%" height="30%" src="https://cdn.popsww.com/popsapp/assets/images/icons/googleplay.png?format=webp" />
+                            <img width="30%" height="30%" src="https://cdn.popsww.com/popsapp/assets/images/icons/smartTV.png?format=webp" />
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-right">
+                    <div class="footer-right_list">
+                        <div style="font-size: 20px; margin-bottom: 20px">Comi VIỆT NAM</div>
+                        <div class="footer-right_list"><a class="footer-text" href="">Trang chủ</a></div>
+                        <div class="footer-right_list"><a class="footer-text" href="">Thể loại</a></div>
+                        <div class="footer-right_list"><a class="footer-text" href="">Theo dõi</a></div>
+                        <div class="footer-right_list"><a class="footer-text" href="">Lịch sử</a></div>
+                    </div>
+
+                    <div class="footer-right_list">
+                        <div style="font-size: 20px; margin-bottom: 20px">CÔNG TY CỔ PHẦN PHONG PHÚ SẮC VIỆT</div>
+                        <div class="footer-right_list">
+                            <span class="footer-right_item">Địa chỉ: </span>
+                            <span class="footer-right_item">Tầng 4, Block A, Viettel Complex Tower, 285 Cách Mạng Tháng Tám, Phường 12, Quận 10, Thành phố Hồ Chí Minh</span>
+                        </div>
+                        <div class="footer-right_list">
+                            <span class="footer-right_item">Điện thoại: </span>
+                            <span class="footer-right_item">+84 (28) 62921652</span>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+    </div>
+
+</body>
+</html>

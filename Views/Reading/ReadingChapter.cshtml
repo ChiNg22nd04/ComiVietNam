@@ -1,0 +1,138 @@
+﻿
+@{
+    ViewBag.Title = "ReadingChapter";
+    Layout = "~/Views/Shared/_ReadingLayout.cshtml";
+}
+<div class="breadcrumb">
+    <a class="breadcrumb-item" href="@Url.Action("Index", "Home")">Trang chủ</a>
+    <span class="separator">|</span>
+    <a class="breadcrumb-item" href="@Url.Action("AllStory", "AllStory", new { categoryID = 0 })">Tất Cả Truyện</a>
+    <span class="separator">|</span>
+    <a class="breadcrumb-item" href="@Url.Action("Detail", "Detail", new { id = Model.Product.ProductID })">@Model.Product.Title</a>
+    <span class="separator">|</span>
+    <p class="breadcrumb-item">@Model.CurrentChapter.EpisodeChapterName</p>
+</div>
+
+<div class="chapter-navigation">
+    <div class="nav-container">
+        @if (Model.PreviousChapter != null)
+        {
+            <a href="@Url.Action("ReadingChapter", "Reading", new { id = Model.Product.ProductID, chapterId = Model.PreviousChapter.ChapterID })"
+               class="btn-nav">
+                <img src="~/Content/images/arrow-left.png" alt="Mũi tên trái" class="arrow-icon" />
+                Chapter trước
+            </a>
+        }
+    </div>
+
+    <h1 class="chapter-title">@Model.CurrentChapter.EpisodeChapterName</h1>
+
+    <div class="nav-container">
+        @if (Model.NextChapter != null)
+        {
+            <a href="@Url.Action("ReadingChapter", "Reading", new { id = Model.Product.ProductID, chapterId = Model.NextChapter.ChapterID })"
+               class="btn-nav">
+                Chapter sau
+                <img src="~/Content/images/arrow-right.png" alt="Mũi tên phải" class="arrow-icon" />
+            </a>
+        }
+    </div>
+</div>
+
+<div class="chapter-content">
+    @if (Model?.Chapters != null && Model.Chapters.Count > 0) // Sử dụng toán tử null conditional để kiểm tra Model
+    {
+        foreach (var chapter in Model.Chapters)
+        {
+            <div class="chapter-item">
+
+                @if (chapter.ChapterImages != null && chapter.ChapterImages.Count > 0)
+                {
+                    // Cast ChapterImages thành kiểu cụ thể IEnumerable<ChapterImage>
+                    var sortedImages = (chapter.ChapterImages as IEnumerable<DAPM2.Models.ChapterImage>)
+                        ?.Where(img => img.ChapterID == chapter.ChapterID) // Lọc theo ChapterID
+                        .OrderBy(img => img.ImageOrder) // Sắp xếp theo ImageOrder
+                        .ToList();
+
+                    if (sortedImages != null && sortedImages.Count > 0)
+                    {
+                        foreach (var image in sortedImages)
+                        {
+                            <div class="image-container">
+
+                                @* Nút Chỉnh sửa và Xóa *@
+                                @if (Session["RoleUser"] != null && Session["RoleUser"].ToString() == "Admin")
+                                {
+                                    <div class="image-actions">
+                                        <a href="@Url.Action("EditImage", "Reading", new { id = image.ImageID, chapterId = chapter.ChapterID, productId = Model.Product.ProductID })"
+                                           class="btn btn-edit">Chỉnh sửa</a>
+                                        <!-- Delete form -->
+                                        <form action="@Url.Action("DeleteImage", "Reading")" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn xóa hình này không?');">
+                                            <input type="hidden" name="id" value="@image.ImageID" /> <!-- Truyền ID của hình ảnh -->
+                                            <input type="hidden" name="chapterId" value="@chapter.ChapterID" /> <!-- Truyền ID của chương -->
+                                            <input type="hidden" name="productId" value="@Model.Product.ProductID" /> <!-- Truyền ID của sản phẩm -->
+                                            <button type="submit" class="btn-delete">Xóa</button>
+                                        </form>
+                                    </div>
+                                }
+                                <img src="@image.ImageURL" alt="Hình ảnh của chương @chapter.EpisodeChapterName" class="responsive-image" />
+
+                            </div>
+                        }
+                        <!-- Nút "Lên đầu trang" -->
+            <div class="circle-border">
+                <button class="btn-top" onclick="scrollToTop()">
+                    <img src="~/Content/images/up-arrow.png" alt="Lên đầu trang" class="up-arrow-icon">
+                </button>
+            </div>
+                    }
+                    else
+                    {
+                        <p>Chương này không có hình ảnh nào.</p>
+                    }
+                }
+                else
+                {
+                    <p>Chương này không có hình ảnh nào.</p>
+                }
+
+            </div>
+        }
+    }
+    else
+    {
+        <p>Chưa có chương nào được đăng tải.</p>
+    }
+</div>
+<div class="chapter-navigation">
+    <div class="nav-container">
+        @if (Model.PreviousChapter != null)
+        {
+            <a href="@Url.Action("ReadingChapter", "Reading", new { id = Model.Product.ProductID, chapterId = Model.PreviousChapter.ChapterID })"
+               class="btn-nav">
+                <img src="~/Content/images/arrow-left.png" alt="Mũi tên trái" class="arrow-icon" />
+                Chapter trước
+            </a>
+        }
+    </div>
+
+    <div class="nav-container">
+        @if (Model.NextChapter != null)
+        {
+            <a href="@Url.Action("ReadingChapter", "Reading", new { id = Model.Product.ProductID, chapterId = Model.NextChapter.ChapterID })"
+               class="btn-nav">
+                Chapter sau
+                <img src="~/Content/images/arrow-right.png" alt="Mũi tên phải" class="arrow-icon" />
+            </a>
+        }
+    </div>
+</div>
+
+<script>
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Cuộn mượt lên đầu
+        });
+    }
+</script>

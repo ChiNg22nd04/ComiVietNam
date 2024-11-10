@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "ListStory";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="breadcrumb">
+    <a class="breadcrumb-item" href="@Url.Action("Index", "Home")">Trang chủ</a>
+    <span class="separator">|</span>
+    <a class="breadcrumb-item" href="@Url.Action("AllStory", "AllStory", new { categoryID = 0 })">Tất Cả Truyện</a>
+    <span class="separator">|</span>
+    <p class="breadcrumb-item">@ViewBag.CategoryName</p>
+</div>
+
+<div class="content-container">
+    <div class="story-section">
+        <h2>@ViewBag.CategoryName</h2>
+
+        @if (Model.Products != null && Model.Products.Count > 0)
+        {
+            <ul class="story-list">
+                @foreach (var story in Model.Products)
+                {
+                    <li class="story-item">
+                        <a href="@Url.Action("Detail", "Detail", new { id = story.ProductID })">
+                            <img src="@story.ImageProcductURL" alt="@story.Title" width="100" />
+                            <h3>@story.Title</h3>
+                        </a>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>Không có truyện trong danh mục này.</p>
+        }
+
+        <div class="pagination">
+            @if (Model.TotalPages > 1)
+            {
+                for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    if (i == Model.CurrentPage)
+                    {
+                        <button class="active">@i</button>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("ListStory", "Story", new { categoryID = ViewBag.CategoryID, page = i })">
+                            <button>@i</button>
+                        </a>
+                    }
+                }
+            }
+        </div>
+    </div>
+
+    <div class="highlight-section">
+        <h2>Nổi Bật</h2>
+        <div class="highlight-item selected">Top 1</div>
+        <div class="highlight-item">Top 2</div>
+        <div class="highlight-item">Top 3</div>
+    </div>
+</div>

@@ -1,0 +1,267 @@
+﻿@{
+    ViewBag.Title = "Trang Chủ";
+    Layout = "~/Views/Shared/_HomePage.cshtml";
+}
+@using System.Web.Mvc
+@model DAPM2.Models.CategoryViewModel
+<link href="~/Content/css/style.css" rel="stylesheet" />
+<link href="~/Content/css/header.css" rel="stylesheet" />
+<link href="~/Content/css/footer.css" rel="stylesheet" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="~/Content/css/styleFont.css" rel="stylesheet" />
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <img src="~/Content/images/comiCover.png" style="width: 10%; margin-left: 20px" />
+            <nav>
+                <ul>
+                    <li class="margin-right"><a class="text-dark" href="@Url.Action("Index", "Home")">Trang Chủ</a></li>
+                    <li class="dropdown margin-right">
+                        <a class="text-dark" href="#">Thể Loại</a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="text-dark" href="@Url.Action("AllStory", "AllStory", new { categoryID = 0 })">
+                                    Tất cả
+                                </a>
+                            </li>
+                            @foreach (var category in Model.categories)
+                            {
+                                <li>
+                                    <a class="text-dark" href="@Url.Action("ListStory", "Story", new { categoryID = category.CategoryID })">
+                                        @category.CategoryName
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                    <li class="margin-right">
+                        @if (Session["Username"] != null)
+                        {
+                            <a class="text-dark" href="@Url.Action("Wishlist", "Wishlist")">Theo Dõi</a>
+                        }
+                        else
+                        {
+                            <a class="text-dark" href="@Url.Action("Login", "Login")">Theo Dõi</a>
+                        }
+                    </li>
+
+                    <li class="margin-right">
+                        @if (Session["Username"] != null)
+                        {
+                            <a class="text-dark" href="@Url.Action("HistoryReading", "History", new { categoryID = 0, productID = 0 })">Lịch Sử</a>
+                        }
+                        else
+                        {
+                            <a class="text-dark" href="@Url.Action("Login", "Login")">Lịch Sử</a>
+                        }
+                    </li>
+
+
+                    @if (Session["RoleUser"] != null && Session["RoleUser"].ToString() == "Admin")
+                    {
+                        <li class="margin-right"><a class="text-dark" href="@Url.Action("Dashboard", "Admin")">Admin</a></li>
+                    }
+                </ul>
+            </nav>
+            <div class="search-bar">
+                @using (Html.BeginForm("Search", "Home", FormMethod.Get))
+                {
+                    <input class="field" type="text" name="searchTerm" placeholder="Tìm kiếm..." />
+                    <i class="fa-solid fa-magnifying-glass text-dark" style="font-size: 20px"></i>
+                }
+            </div>
+            <nav class="reg">
+                <ul>
+                    @if (Session["Username"] != null)
+                    {
+                        <li class="user-dropdown margin-right">
+                            <a class="text-dark" href="#" class="user-icon">
+                                <!-- Thêm ảnh đại diện -->
+                                <i class="fa-solid fa-user" style="margin-right: 5px"></i>
+                                @*<img src="~/Content/images/profile1.png" alt="User Profile" class="profile-pic" />*@
+                                <!-- Hiển thị email và mũi tên -->
+                                @Session["FullName"] <span class="arrow">▼</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="text-dark" href="@Url.Action("ProfileUser", "Profile")">Thông Tin Tài Khoản</a>
+                                </li>
+                                <li><a class="text-dark" href="#">Cài Đặt</a></li>
+                                <li><a class="text-dark" href="#">Hỗ Trợ</a></li>
+                                <li><a class="text-dark" href="@Url.Action("Logout", "Login")">Đăng Xuất</a></li>
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="reg margin-right">
+                            <a class="text-dark" href="@Url.Action("Login", "Login")">
+                                <i class="fa-solid fa-user" style="margin-right: 5px"></i>
+                                Đăng nhập
+                            </a>
+                        </li>
+                    }
+                </ul>
+
+            </nav>
+
+        </div>
+    </header>
+
+    <section class="featured">
+        <h2>Truyện Xem Nhiều Nhất</h2>
+        <a href="@Url.Action("AllStory", "AllStory", new { categoryID = 0 })" class="view-all">Xem tất cả</a>
+        <div class="featured-stories">
+            @foreach (var story in Model.products)
+            {
+                <div class="story-card" data-id="@story.ProductID">
+                    <img src="@story.ImageProcductURL" alt="@story.Title" class="story-image" />
+                    <h3>@story.Title</h3>
+                    <br />
+                    <p class="view-count">@story.ViewCount lượt xem</p> <!-- Lượt xem ngay dưới tiêu đề -->
+                </div>
+            }
+        </div>
+    </section>
+
+    <section class="featured">
+        <h2>Truyện Mới Cập Nhật</h2>
+        <a href="@Url.Action("AllStory", "AllStory", new { categoryID = 0 })" class="view-all">Xem tất cả</a>
+        <div class="featured-stories">
+            @foreach (var story in Model.recentlyUpdatedStories)
+            {
+                //var latestChapter = story.UpdateChapters.ToList().OrderByDescending(uc => uc.DateAdded).FirstOrDefault();
+                var latestChapter = story.UpdateChapters.OrderByDescending(uc => uc.DateAdded).FirstOrDefault();
+                <div class="story-card" data-id="@story.ProductID">
+                    <img src="@story.ImageProcductURL" alt="@story.Title" class="story-image" />
+                    <h3>@story.Title</h3>
+                    <p>@latestChapter.EpisodeChapterName</p>
+                    <p>@Model.GetDateAddedText(latestChapter.DateAdded)</p>
+                </div>
+            }
+        </div>
+    </section>
+
+    <section class="featured">
+        <h2>Truyện Mới</h2>
+        <a href="@Url.Action("AllStory", "AllStory", new { categoryID = 0 })" class="view-all">Xem tất cả</a>
+        <div class="featured-stories">
+            @foreach (var story in Model.recentlyAddedStories)
+            {
+                <div class="story-card" data-id="@story.ProductID">
+                    <img src="@story.ImageProcductURL" alt="@story.Title" class="story-image" />
+                    <h3>@story.Title</h3>
+                </div>
+            }
+        </div>
+    </section>
+
+    <footer>
+        <div class="end">
+            <div class="footer-left">
+                <img src="~/Content/images/comiCover.png" style="width: 60%" />
+                <div class="footer-left_list">
+                    <div class="footer-left_item box1">
+                        Mạng xã hội chia sẻ các nội dung video giải trí chất lượng cao, phù hợp mọi độ tuổi và an toàn cho trẻ em.
+                    </div>
+                    <div class="footer-left_item">
+                        <img width="30%" height="30%" src="https://cdn.popsww.com/popsapp/assets/images/icons/appstore.png?format=webp" />
+                        <img width="30%" height="30%" src="https://cdn.popsww.com/popsapp/assets/images/icons/googleplay.png?format=webp" />
+                        <img width="30%" height="30%" src="https://cdn.popsww.com/popsapp/assets/images/icons/smartTV.png?format=webp" />
+                    </div>
+                </div>
+            </div>
+            <div class="footer-right">
+                <div class="footer-right_list">
+                    <div style="font-size: 20px; margin-bottom: 20px">Comi VIỆT NAM</div>
+                    <div class="footer-right_list"><a class="footer-text" href="">Trang chủ</a></div>
+                    <div class="footer-right_list"><a class="footer-text" href="">Thể loại</a></div>
+                    <div class="footer-right_list"><a class="footer-text" href="">Theo dõi</a></div>
+                    <div class="footer-right_list"><a class="footer-text" href="">Lịch sử</a></div>
+                </div>
+
+                <div class="footer-right_list">
+                    <div style="font-size: 20px; margin-bottom: 20px">CÔNG TY CỔ PHẦN PHONG PHÚ SẮC VIỆT</div>
+                    <div class="footer-right_list">
+                        <div class="footer-right_list">
+                            <span class="footer-right_item">Địa chỉ: Tầng 4, Block A, Viettel Complex Tower, 285 Cách Mạng Tháng Tám, Phường 12, Quận 10, Thành phố Hồ Chí Minh</span>
+                        </div>
+                        <div class="footer-right_list">
+                            <span class="footer-right_item">Điện thoại: +84 (28) 62921652</span>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+    </footer>
+</body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Lấy phần tử chứa dropdown
+        var userIcon = document.querySelector(".user-icon");
+        var dropdownMenu = document.querySelector(".user-dropdown .dropdown-menu");
+
+        // Sự kiện click vào icon user để hiện/ẩn menu
+        userIcon.addEventListener("click", function (event) {
+            event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ a
+            dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
+        });
+
+        // Ẩn dropdown khi click ra ngoài
+        document.addEventListener("click", function (event) {
+            if (!userIcon.contains(event.target)) {
+                dropdownMenu.style.display = "none";
+            }
+        });
+    });
+
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+    // Lấy tất cả các phần tử có class story-card
+    var storyCards = document.querySelectorAll(".story-card");
+
+    // Thêm sự kiện click cho mỗi story-card
+    storyCards.forEach(function (card) {
+        card.addEventListener("click", function () {
+            // Lấy giá trị của thuộc tính data-id
+            var storyId = this.getAttribute("data-id");
+
+            // Điều hướng đến trang chi tiết với ID tương ứng
+            window.location.href = '@Url.Action("Detail", "Detail")' + '?id=' + storyId;
+            });
+        });
+    });
+
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Lấy phần tử dropdown menu
+        var dropdownItems = document.querySelectorAll(".dropdown-menu li a");
+
+        // Thêm sự kiện click cho mỗi item trong dropdown
+        dropdownItems.forEach(function (item) {
+            item.addEventListener("click", function () {
+                // Điều hướng đến trang ListStory với ID thể loại
+                window.location.href = this.href; // this.href chứa đường dẫn đến ListStory
+            });
+        });
+    });
+
+</script>
+</html>

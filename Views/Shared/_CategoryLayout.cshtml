@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - @ViewBag.Title</title>
+    <link href="~/Content/css/category.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">Admin Panel</div>
+            <nav>
+                <ul>
+                    <li class="margin-right"><a href="@Url.Action("Index", "Home")">Trang Chủ</a></li>
+                    <li class="margin-right"><a href="@Url.Action("Dashboard", "Admin")">Dashboard</a></li>
+                    <li class="margin-right"><a href="@Url.Action("ManageUsers", "Admin")">Quản Lý Người Dùng</a></li>
+                    <li class="margin-right"><a href="@Url.Action("ManageStories", "Admin")">Quản Lý Truyện</a></li>
+                    <li class="margin-right"><a href="@Url.Action("ManageCategories", "Admin")">Quản Lý Thể Loại</a></li>
+                </ul>
+            </nav>
+            <div class="user-info">
+                @if (Session["AdminUsername"] != null)
+                {
+                    <span>@Session["AdminUsername"]</span>
+                    <a href="@Url.Action("Logout", "Admin")">Đăng Xuất</a>
+                }
+            </div>
+        </div>
+    </header>
+
+    <div class="content-container">
+        @RenderBody()
+    </div>
+
+    <footer>
+        <div class="end">
+            <div class="footer-left">
+                <img src="~/Content/images/comiCover.png" style="width: 60%" />
+                <div class="footer-left_list">
+                    <div class="footer-left_item box1">
+                        Mạng xã hội chia sẻ các nội dung video giải trí chất lượng cao, phù hợp mọi độ tuổi và an toàn cho trẻ em.
+                    </div>
+                    <div class="footer-left_item">
+                        <img width="30%" height="30%" src="https://cdn.popsww.com/popsapp/assets/images/icons/appstore.png?format=webp" />
+                        <img width="30%" height="30%" src="https://cdn.popsww.com/popsapp/assets/images/icons/googleplay.png?format=webp" />
+                        <img width="30%" height="30%" src="https://cdn.popsww.com/popsapp/assets/images/icons/smartTV.png?format=webp" />
+                    </div>
+                </div>
+            </div>
+            <div class="footer-right">
+                <div class="footer-right_list">
+                    <div style="font-size: 20px; margin-bottom: 20px">Comi VIỆT NAM</div>
+                    <div class="footer-right_list"><a class="footer-text" href="">Trang chủ</a></div>
+                    <div class="footer-right_list"><a class="footer-text" href="">Thể loại</a></div>
+                    <div class="footer-right_list"><a class="footer-text" href="">Theo dõi</a></div>
+                    <div class="footer-right_list"><a class="footer-text" href="">Lịch sử</a></div>
+                </div>
+
+                <div class="footer-right_list">
+                    <div style="font-size: 20px; margin-bottom: 20px">CÔNG TY CỔ PHẦN PHONG PHÚ SẮC VIỆT</div>
+                    <div class="footer-right_list">
+                        <span class="footer-right_item">Địa chỉ: </span>
+                        <span class="footer-right_item">Tầng 4, Block A, Viettel Complex Tower, 285 Cách Mạng Tháng Tám, Phường 12, Quận 10, Thành phố Hồ Chí Minh</span>
+                    </div>
+                    <div class="footer-right_list">
+                        <span class="footer-right_item">Điện thoại: </span>
+                        <span class="footer-right_item">+84 (28) 62921652</span>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

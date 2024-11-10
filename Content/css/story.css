@@ -1,0 +1,559 @@
+﻿/* Đặt font chữ cho toàn bộ trang */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif; /* Đặt font chữ mặc định là Arial */
+}
+
+/* Khoảng trống phía trên nội dung để không bị header che */
+body {
+    background-color: #f5f5f5; /* Màu nền cho body */
+    padding-top: 100px; /* Điều chỉnh để không bị header che khuất nội dung */
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 96vw; /* Đảm bảo nội dung bên trong không sát mép màn hình */
+    margin: 0 auto; /* Căn giữa nội dung của header */
+}
+
+.logo {
+    color: white;
+    font-size: 24px;
+}
+
+
+.profile-pic {
+    width: 30px; /* Kích thước ảnh đại diện */
+    height: 30px; /* Kích thước ảnh đại diện */
+    border-radius: 20%; /* Bo tròn ảnh */
+    margin-right: 10px; /* Khoảng cách giữa ảnh và email */
+}
+
+/* CSS cho main content và sidebar */
+.container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.main-content, .sidebar {
+    background-color: #C8C2E0;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 10px;
+}
+
+.main-content {
+    width: 60%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar {
+    width: 20%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.story-info {
+    margin-top: 20px;
+}
+
+.story-info p {
+    margin: 8px 0;
+}
+
+/*.follow-btn {
+    background-color: #f24e4e;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.follow-section {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.follow-section span {
+    margin-left: 10px;
+}*/
+
+.summary, .comments , .chapter{
+    margin-top: 20px;
+}
+
+.summary-title, .comments-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: 1px solid black;
+    padding-bottom: 5px;
+}
+
+.summary-content {
+    background-color: #f0f0f0;
+    height: auto;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.see-more {
+    margin-top: 10px;
+    color: grey;
+    cursor: pointer;
+}
+
+.top-story {
+    background-color: #f59898;
+    height: 80px;
+    border-radius: 8px;
+    margin: 10px 0;
+}
+
+/* CSS cho footer */
+.end {
+    background-color: black;
+    padding: 50px;
+    margin-top: auto; /* Pushes footer to the bottom */
+}
+
+.end h1 {
+    color: white;
+}
+/* CSS cho layout chứa hình ảnh và thông tin */
+.story-container {
+    display: flex;
+    align-items: flex-start; /* Căn chỉnh các thành phần theo chiều dọc */
+    margin: 20px; /* Khoảng cách xung quanh */
+    background-color: #f0f0f0; /* Màu nền cho container */
+    padding: 20px; /* Khoảng cách bên trong container */
+    border-radius: 8px; /* Bo góc cho container */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+}
+
+/* CSS cho phần hình ảnh */
+.story-image img {
+    width: 250px; /* Chiều rộng cố định cho hình ảnh */
+    height: 300px; /* Chiều cao cố định cho hình ảnh */
+    background-color: #e0e0e0; /* Màu nền khi chưa có hình ảnh */
+    border-radius: 8px; /* Bo góc cho hình ảnh */
+    margin-right: 20px; /* Khoảng cách giữa hình ảnh và thông tin */
+    object-fit: cover; /* Hình ảnh sẽ lấp đầy khung mà không bị méo */
+    float: left; /* Đặt hình ảnh nằm bên trái */
+}
+
+/* CSS cho phần thông tin truyện */
+.story-info {
+    flex: 1; /* Chiếm toàn bộ không gian còn lại */
+}
+
+    .story-info h3 {
+        max-width: 500px;
+        font-size: 24px;
+        margin-bottom: 10px; /* Khoảng cách bên dưới tiêu đề */
+        word-wrap: break-word; /* Cho phép từ dài được ngắt và xuống dòng */
+    }
+
+.story-info p {
+    margin: 5px 0; /* Khoảng cách giữa các đoạn thông tin */
+}
+
+.follow-btn {
+    background-color: #f24e4e;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 10px; /* Khoảng cách trên của nút theo dõi */
+}
+
+/* Định dạng các mục thông tin thêm */
+.story-info .info-item {
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc */
+    margin: 5px 0; /* Khoảng cách giữa các mục thông tin */
+}
+
+.story-info .info-item span {
+    margin-right: 10px; /* Khoảng cách giữa icon hoặc chữ và nội dung */
+}
+.read-btn {
+    background-color: #4caf50; /* Màu nền xanh lá */
+    color: white; /* Màu chữ trắng */
+    border: none; /* Không có viền */
+    padding: 10px 20px; /* Padding */
+    border-radius: 20px; /* Bo góc */
+    cursor: pointer; /* Con trỏ chuột khi hover */
+    margin-left: 10px;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}
+.chapter-item {
+    background-color: #C8C2E0; /* Light background for chapter items */
+    border: 1px solid #ddd; /* Light gray border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 15px; /* Inner spacing */
+    margin: 10px 0; /* Space between items */
+    transition: background-color 0.3s; /* Smooth background transition */
+
+    display: flex; /* Use flexbox */
+    justify-content: space-between; /* Space between title and actions */
+    align-items: center; /* Center items vertically */
+}
+
+    .chapter-item:hover {
+        background-color: #f59898; /* Change background on hover */
+    }
+
+    .chapter-item strong {
+        display: block; /* Make title a block for better spacing */
+        font-size: 18px; /* Font size for chapter title */
+        color: #333; /* Dark text color */
+    }
+    .chapter-item p{
+        color: #333;
+        margin-top: 5px;
+    }
+
+
+/* CSS for edit, delete, and upload buttons */
+.btn {
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    margin: 5px 0;
+    display: inline-block;
+}
+/* Edit button */
+.btn-edit {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+}
+
+    .btn-edit:hover {
+        background-color: #45a049;
+    }
+
+/* Delete button */
+.btn-danger {
+    background-color: #f44336; /* Red */
+    color: white;
+    border: none;
+}
+
+    .btn-danger:hover {
+        background-color: #d32f2f;
+    }
+/* Upload image button */
+.btn-secondary {
+    background-color: #607d8b; /* Grey */
+    color: white;
+    border: none;
+}
+
+    .btn-secondary:hover {
+        background-color: #455a64;
+    }
+.no-views {
+    color: gray; /* Màu chữ xám */
+    opacity: 0.9; /* Độ trong suốt 60% */
+    font-style: italic; /* In nghiêng để thêm sự khác biệt */
+}
+
+/* CSS for the form */
+/*form.fixed-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+}*/
+
+    /* Textarea styling */
+    /*form.fixed-form textarea {
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        resize: none;
+        width: 100%;
+        height: 100px;
+        box-sizing: border-box;
+    }*/
+
+    /* Submit button styling */
+    /*form.fixed-form button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        max-width: 20%;
+    }
+
+        form.fixed-form button:hover {
+            background-color: #45a049;
+        }*/
+
+
+
+/* Container for comments section */
+.comments {
+    background-color: #d2cdea; /* Light purple background */
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Comments title */
+.comments-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: black;
+}
+/* Login required message styling */
+.comments p {
+    background-color: #f0f0f0; 
+    padding: 10px;
+    border-radius: 8px;
+    color: #666;
+    font-size: 14px;
+}
+    /* Login link styling */
+    .comments p a {
+        color: #5a67d8; /* Blue color for the login link */
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+        .comments p a:hover {
+            text-decoration: underline;
+        }
+
+
+/* Styling for the form to submit comments */
+.fixed-form {
+    margin-bottom: 20px;
+}
+
+/* Textarea for comments input */
+textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: #f2f2f2; /* Light gray background */
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    resize: none;
+}
+
+/* Submit button styling */
+.fixed-form .btn-primary {
+    margin-top: 10px;
+    background-color: #4CAF50; /* Button color */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+}
+
+    .fixed-form .btn-primary:hover {
+        background-color: #4c51bf; /* Darker color on hover */
+    }
+
+/* Error and success messages */
+.alert {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: opacity 0.7s ease-in-out;
+}
+.fade {
+    opacity: 1;
+}
+
+.hide {
+    opacity: 0;
+}
+
+.alert-danger {
+    background-color: #ffe5e5; /* Light red background */
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+.alert-success {
+    background-color: #e6ffed; /* Light green background */
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+/* Comment list */
+.comment-list {
+    margin-top: 20px;
+}
+
+/* Individual comment items */
+.comment-item {
+    background-color: #f2f2f2; /* Light gray background for comment */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+    .comment-item p {
+        margin: 0; /* Remove default margin between paragraphs */
+        padding: 5px 0; /* Add a small padding for better spacing */
+    }
+
+    /* User name in comments */
+    .comment-item strong {
+        font-size: 14px;
+        color: #333;
+    }
+
+    /* Date of comment */
+    .comment-item em {
+        font-size: 12px;
+        color: #666;
+    }
+
+    /* Date styling */
+    .comment-item p em {
+        display: block; /* Ensure it's on its own line */
+        margin-top: 2px; /* Reduce the margin between the comment and the date */
+        font-size: 12px; /* Smaller font size for the date */
+        color: #888; /* Lighter color for the date */
+    }
+/* Empty state message */
+.comment-list p {
+    font-size: 14px;
+    color: #666;
+}
+.comment-list h4 {
+    border-bottom: 1px solid black;
+    margin-bottom: 10px;
+}
+
+
+.comment-header {
+    display: flex;
+    align-items: center;
+}
+
+
+    .comment-header p {
+        margin: 0; /* Xóa margin để chúng không tạo khoảng cách */
+    }
+
+
+
+.reply-button {
+    margin-left: 10px; /* Space between the date and the button */
+    text-decoration: none; /* Remove underline */
+    color: blue; /* Change to your desired color */
+}
+
+.reply-container {
+    margin-top: 10px; /* Space above the replies */
+    padding: 10px; /* Padding around the container */
+    border-left: 2px solid #007BFF; /* Left border to differentiate replies */
+    background-color: #f2f2f2; /* Set background color */
+    border-radius: 5px; /* Rounded corners */
+}
+
+.reply-item {
+    margin-bottom: 8px; /* Space between individual replies */
+    padding: 8px; /* Padding around each reply */
+    background-color: #f2f2f2; /* Set background to white for replies */
+    border: 1px solid #e0e0e0; /* Light border for each reply */
+    border-radius: 4px; /* Rounded corners for replies */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack items vertically */
+}
+
+.reply-header {
+    display: flex; /* Use flexbox for layout of username and comment */
+    align-items: center; /* Center items vertically */
+}
+
+    .reply-header strong {
+        margin-right: 10px; /* Space between the username and the comment */
+        color: #333; /* Dark color for the username */
+    }
+
+.comment-text {
+    margin: 0; /* Remove default margin */
+    color: #555; /* Gray color for comment text */
+    flex: 1; /* Allow comment text to grow */
+}
+
+.review-date {
+    margin: 0; /* Remove default margin for the date */
+    color: #888; /* Lighter color for date */
+    font-style: italic; /* Italics for the date */
+}
+/* Nút theo dõi */
+.follow-button {
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border: none;
+    font-size: 16px;
+    background-color: #626470;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 20px; /* Bo góc */
+}
+
+    .follow-button.following {
+        background-color: #626470;
+    }
+
+/* Icon styling */
+.icon {
+    font-size: 16px;
+    display: inline-block;
+    font-style: normal;
+}
+
+/* Heart icon */
+.icon-heart:before {
+    content: "❤️"; /* Unicode for heart */
+}
+
+/* X icon */
+.icon-x:before {
+    content: "❌"; /* Unicode for X */
+}
+
+/* Button text styling */
+.follow-text {
+    font-size: 16px;
+}

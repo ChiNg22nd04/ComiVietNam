@@ -1,0 +1,211 @@
+﻿/* Đặt font chữ cho toàn bộ trang */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif; /* Đặt font chữ mặc định là Arial */
+}
+/* Nếu bạn muốn bỏ gạch chân cho tất cả các đường link trên trang */
+a {
+    text-decoration: none; /* Bỏ gạch chân cho tất cả các đường link */
+}
+
+/* Khoảng trống phía trên nội dung để không bị header che */
+body {
+    padding-top: 100px; /* Điều chỉnh để không bị header che khuất nội dung */
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 96vw; /* Đảm bảo nội dung bên trong không sát mép màn hình */
+    margin: 0 auto; /* Căn giữa nội dung của header */
+}
+
+.logo {
+    color: white;
+    font-size: 24px;
+}
+
+
+/* Định dạng search bar */
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: flex-end; /* Căn phải thanh tìm kiếm */
+}
+
+    .search-bar input {
+        padding: 8px;
+        border-radius: 25px;
+        border: 1px solid #ccc;
+        outline: none;
+        width: 250px;
+        padding-left: 15px;
+        transition: border 0.3s ease;
+    }
+
+        .search-bar input:focus {
+            border: 1px solid #4CAF50;
+        }
+
+        /* Hiệu ứng hover cho nút kính lúp */
+        .search-bar button:hover {
+            background-color: #ff8a80; /* Nền màu xanh lá khi hover */
+            color: white; /* Màu biểu tượng kính lúp đổi sang trắng khi hover */
+        }
+
+        .search-bar button i {
+            color: white; /* Màu mặc định của kính lúp */
+            transition: color 0.3s ease;
+        }
+
+        /* Đổi màu kính lúp khi hover */
+        .search-bar button:hover i {
+            color: white;
+        }
+
+        .search-bar button .search-icon {
+            width: 20px; /* Set width for the icon */
+            height: 20px; /* Set height for the icon */
+            vertical-align: middle; /* Align icon vertically */
+        }
+
+
+.profile-pic {
+    width: 30px; /* Kích thước ảnh đại diện */
+    height: 30px; /* Kích thước ảnh đại diện */
+    border-radius: 20%; /* Bo tròn ảnh */
+    margin-right: 10px; /* Khoảng cách giữa ảnh và email */
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Đảm bảo chiều cao của trang tối thiểu là 100% */
+}
+
+.content {
+    flex: 1; /* Cho phép nội dung giãn ra nếu cần */
+    padding: 20px; /* Padding cho nội dung */
+}
+
+
+
+.end h1 {
+    color: white;
+}
+
+
+.info-user {
+    border: 1px solid #ddd; /* Đường viền mờ */
+    border-radius: 8px; /* Bo góc */
+    padding: 20px; /* Khoảng cách bên trong */
+    background-color: #f9f9f9; /* Màu nền */
+    max-width: 400px; /* Chiều rộng tối đa */
+    margin: 20px auto; /* Căn giữa theo chiều ngang */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+}
+
+    .info-user h3 {
+        color: #333; /* Màu chữ cho tiêu đề */
+        font-size: 24px; /* Kích thước chữ */
+        margin-bottom: 15px; /* Khoảng cách dưới tiêu đề */
+    }
+
+    .info-user p {
+        color: #666; /* Màu chữ cho các đoạn văn */
+        font-size: 16px; /* Kích thước chữ cho đoạn văn */
+        margin: 5px 0; /* Khoảng cách giữa các đoạn */
+    }
+
+    .info-user strong {
+        color: #000; /* Màu chữ cho các nhãn mạnh */
+    }
+
+
+.profile-container {
+    display: flex;
+    margin: 20px; /* Khoảng cách tổng thể */
+}
+
+.profile-sidebar {
+    width: 250px; /* Chiều rộng cho sidebar */
+    border-right: 1px solid #ccc; /* Đường viền bên phải */
+    padding: 20px; /* Padding cho sidebar */
+}
+
+.avatar-container {
+    text-align: center; /* Canh giữa avatar và tiêu đề */
+}
+
+.avatar {
+    border: 2px solid #e1814c;
+    width: 80%; /* Kích thước avatar */
+    height: 80%; /* Kích thước avatar */
+    border-radius: 50%; /* Hình tròn */
+    border: 2px solid #e1814c;
+}
+
+.account-title {
+    font-size: 16px; /* Kích thước chữ cho tài khoản */
+    margin-top: 10px; /* Khoảng cách trên giữa avatar và tiêu đề tài khoản */
+}
+
+.account-info {
+    list-style: none; /* Bỏ dấu đầu dòng cho danh sách */
+    padding: 0; /* Bỏ padding cho danh sách */
+}
+
+    .account-info li {
+        margin: 10px 0; /* Khoảng cách giữa các mục */
+    }
+
+    .account-info a {
+        text-decoration: none; /* Bỏ gạch chân */
+        color: #000; /* Màu chữ */
+    }
+
+.info-user {
+    flex: 1; /* Chiếm phần còn lại của container */
+    padding: 20px; /* Padding cho thông tin tài khoản */
+    margin-left: 300px; /* Di chuyển khung qua trái */
+}
+
+.btn-change {
+    display: inline-block; /* Hiển thị nút ở dạng khối */
+    margin-top: 10px; /* Khoảng cách trên nút */
+    padding: 10px 20px; /* Padding cho nút */
+    background-color: #007bff; /* Màu nền cho nút */
+    color: white; /* Màu chữ */
+    text-decoration: none; /* Bỏ gạch chân */
+    border-radius: 5px; /* Bo góc cho nút */
+    transition: background-color 0.3s; /* Hiệu ứng chuyển màu */
+}
+
+    .btn-change:hover {
+        background-color: #0056b3; /* Màu nền khi hover */
+    }
+
+.btn-edit {
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    margin: 5px 0;
+    display: inline-block;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+}
+
+    .btn-edit:hover {
+        background-color: #45a049;
+    }
+    .account-title{
+        color: white;
+    }

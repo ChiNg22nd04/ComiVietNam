@@ -1,0 +1,729 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="WebStory2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ChapterImages">
+          <Key>
+            <PropertyRef Name="ImageID" />
+          </Key>
+          <Property Name="ImageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ChapterID" Type="int" />
+          <Property Name="ImageURL" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ImageOrder" Type="int" />
+          <Property Name="UploadedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Author" Type="nvarchar" MaxLength="255" />
+          <Property Name="PublicationYear" Type="int" />
+          <Property Name="CategoryID" Type="int" />
+          <Property Name="CreatedAt" Type="datetime" />
+          <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ImageProcductURL" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ViewCount" Type="int" />
+        </EntityType>
+        <EntityType Name="ReadingHistory">
+          <Key>
+            <PropertyRef Name="HistoryID" />
+          </Key>
+          <Property Name="HistoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="LastReadDate" Type="datetime" />
+          <Property Name="ChapterID" Type="int" />
+        </EntityType>
+        <EntityType Name="UpdateChapter">
+          <Key>
+            <PropertyRef Name="ChapterID" />
+          </Key>
+          <Property Name="ChapterID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="EpisodeChapterName" Type="nvarchar" MaxLength="255" />
+          <Property Name="DateAdded" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UserReviews">
+          <Key>
+            <PropertyRef Name="ReviewID" />
+          </Key>
+          <Property Name="ReviewID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="ParentReviewID" Type="int" />
+          <Property Name="Comment" Type="nvarchar(max)" />
+          <Property Name="ReviewDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Avatar" Type="nvarchar(max)" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="PasswordHash" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="RoleUser" Type="nvarchar" MaxLength="20" />
+          <Property Name="RegisteredDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Wishlist">
+          <Key>
+            <PropertyRef Name="WishlistID" />
+          </Key>
+          <Property Name="WishlistID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="DateAdded" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__ChapterIm__Chapt__5535A963">
+          <End Role="UpdateChapter" Type="Self.UpdateChapter" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ChapterImages" Type="Self.ChapterImages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UpdateChapter">
+              <PropertyRef Name="ChapterID" />
+            </Principal>
+            <Dependent Role="ChapterImages">
+              <PropertyRef Name="ChapterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__Categor__3E52440B">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReadingHi__Chapt__571DF1D5">
+          <End Role="UpdateChapter" Type="Self.UpdateChapter" Multiplicity="0..1" />
+          <End Role="ReadingHistory" Type="Self.ReadingHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UpdateChapter">
+              <PropertyRef Name="ChapterID" />
+            </Principal>
+            <Dependent Role="ReadingHistory">
+              <PropertyRef Name="ChapterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReadingHi__Produ__440B1D61">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ReadingHistory" Type="Self.ReadingHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="ReadingHistory">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReadingHi__UserI__4316F928">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ReadingHistory" Type="Self.ReadingHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="ReadingHistory">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UpdateCha__Produ__5165187F">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UpdateChapter" Type="Self.UpdateChapter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="UpdateChapter">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserRevie__Produ__4D94879B">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserReviews" Type="Self.UserReviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="UserReviews">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserRevie__UserI__4CA06362">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserReviews" Type="Self.UserReviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserReviews">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Wishlist__Produc__48CFD27E">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Wishlist" Type="Self.Wishlist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Wishlist">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Wishlist__UserID__47DBAE45">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Wishlist" Type="Self.Wishlist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Wishlist">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParentReview">
+          <End Role="UserReviews" Type="Self.UserReviews" Multiplicity="0..1" />
+          <End Role="UserReviews1" Type="Self.UserReviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserReviews">
+              <PropertyRef Name="ReviewID" />
+            </Principal>
+            <Dependent Role="UserReviews1">
+              <PropertyRef Name="ParentReviewID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WebStory2ModelStoreContainer">
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChapterImages" EntityType="Self.ChapterImages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReadingHistory" EntityType="Self.ReadingHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UpdateChapter" EntityType="Self.UpdateChapter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserReviews" EntityType="Self.UserReviews" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Wishlist" EntityType="Self.Wishlist" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__ChapterIm__Chapt__5535A963" Association="Self.FK__ChapterIm__Chapt__5535A963">
+            <End Role="UpdateChapter" EntitySet="UpdateChapter" />
+            <End Role="ChapterImages" EntitySet="ChapterImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__Categor__3E52440B" Association="Self.FK__Product__Categor__3E52440B">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReadingHi__Chapt__571DF1D5" Association="Self.FK__ReadingHi__Chapt__571DF1D5">
+            <End Role="UpdateChapter" EntitySet="UpdateChapter" />
+            <End Role="ReadingHistory" EntitySet="ReadingHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReadingHi__Produ__440B1D61" Association="Self.FK__ReadingHi__Produ__440B1D61">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ReadingHistory" EntitySet="ReadingHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReadingHi__UserI__4316F928" Association="Self.FK__ReadingHi__UserI__4316F928">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="ReadingHistory" EntitySet="ReadingHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UpdateCha__Produ__5165187F" Association="Self.FK__UpdateCha__Produ__5165187F">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="UpdateChapter" EntitySet="UpdateChapter" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserRevie__Produ__4D94879B" Association="Self.FK__UserRevie__Produ__4D94879B">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="UserReviews" EntitySet="UserReviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserRevie__UserI__4CA06362" Association="Self.FK__UserRevie__UserI__4CA06362">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserReviews" EntitySet="UserReviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Wishlist__Produc__48CFD27E" Association="Self.FK__Wishlist__Produc__48CFD27E">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Wishlist" EntitySet="Wishlist" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Wishlist__UserID__47DBAE45" Association="Self.FK__Wishlist__UserID__47DBAE45">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Wishlist" EntitySet="Wishlist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParentReview" Association="Self.FK_ParentReview">
+            <End Role="UserReviews" EntitySet="UserReviews" />
+            <End Role="UserReviews1" EntitySet="UserReviews" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WebStory2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__Product__Categor__3E52440B" FromRole="Categories" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="ChapterImage">
+          <Key>
+            <PropertyRef Name="ImageID" />
+          </Key>
+          <Property Name="ImageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ChapterID" Type="Int32" />
+          <Property Name="ImageURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ImageOrder" Type="Int32" />
+          <Property Name="UploadedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="UpdateChapter" Relationship="Self.FK__ChapterIm__Chapt__5535A963" FromRole="ChapterImages" ToRole="UpdateChapter" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Author" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PublicationYear" Type="Int32" />
+          <Property Name="CategoryID" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ImageProcductURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ViewCount" Type="Int32" />
+          <NavigationProperty Name="Category" Relationship="Self.FK__Product__Categor__3E52440B" FromRole="Product" ToRole="Categories" />
+          <NavigationProperty Name="ReadingHistories" Relationship="Self.FK__ReadingHi__Produ__440B1D61" FromRole="Product" ToRole="ReadingHistory" />
+          <NavigationProperty Name="UpdateChapters" Relationship="Self.FK__UpdateCha__Produ__5165187F" FromRole="Product" ToRole="UpdateChapter" />
+          <NavigationProperty Name="UserReviews" Relationship="Self.FK__UserRevie__Produ__4D94879B" FromRole="Product" ToRole="UserReviews" />
+          <NavigationProperty Name="Wishlists" Relationship="Self.FK__Wishlist__Produc__48CFD27E" FromRole="Product" ToRole="Wishlist" />
+        </EntityType>
+        <EntityType Name="ReadingHistory">
+          <Key>
+            <PropertyRef Name="HistoryID" />
+          </Key>
+          <Property Name="HistoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="LastReadDate" Type="DateTime" Precision="3" />
+          <Property Name="ChapterID" Type="Int32" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__ReadingHi__Produ__440B1D61" FromRole="ReadingHistory" ToRole="Product" />
+          <NavigationProperty Name="UpdateChapter" Relationship="Self.FK__ReadingHi__Chapt__571DF1D5" FromRole="ReadingHistory" ToRole="UpdateChapter" />
+          <NavigationProperty Name="User" Relationship="Self.FK__ReadingHi__UserI__4316F928" FromRole="ReadingHistory" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="UpdateChapter">
+          <Key>
+            <PropertyRef Name="ChapterID" />
+          </Key>
+          <Property Name="ChapterID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="EpisodeChapterName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DateAdded" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ChapterImages" Relationship="Self.FK__ChapterIm__Chapt__5535A963" FromRole="UpdateChapter" ToRole="ChapterImages" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__UpdateCha__Produ__5165187F" FromRole="UpdateChapter" ToRole="Product" />
+          <NavigationProperty Name="ReadingHistories" Relationship="Self.FK__ReadingHi__Chapt__571DF1D5" FromRole="UpdateChapter" ToRole="ReadingHistory" />
+        </EntityType>
+        <EntityType Name="UserReview">
+          <Key>
+            <PropertyRef Name="ReviewID" />
+          </Key>
+          <Property Name="ReviewID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="ParentReviewID" Type="Int32" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ReviewDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__UserRevie__Produ__4D94879B" FromRole="UserReviews" ToRole="Product" />
+          <NavigationProperty Name="User" Relationship="Self.FK__UserRevie__UserI__4CA06362" FromRole="UserReviews" ToRole="Users" />
+          <NavigationProperty Name="UserReviews1" Relationship="Self.FK_ParentReview" FromRole="UserReviews" ToRole="UserReviews1" />
+          <NavigationProperty Name="UserReview1" Relationship="Self.FK_ParentReview" FromRole="UserReviews1" ToRole="UserReviews" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RoleUser" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="RegisteredDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ReadingHistories" Relationship="Self.FK__ReadingHi__UserI__4316F928" FromRole="Users" ToRole="ReadingHistory" />
+          <NavigationProperty Name="UserReviews" Relationship="Self.FK__UserRevie__UserI__4CA06362" FromRole="Users" ToRole="UserReviews" />
+          <NavigationProperty Name="Wishlists" Relationship="Self.FK__Wishlist__UserID__47DBAE45" FromRole="Users" ToRole="Wishlist" />
+        </EntityType>
+        <EntityType Name="Wishlist">
+          <Key>
+            <PropertyRef Name="WishlistID" />
+          </Key>
+          <Property Name="WishlistID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="DateAdded" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__Wishlist__Produc__48CFD27E" FromRole="Wishlist" ToRole="Product" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Wishlist__UserID__47DBAE45" FromRole="Wishlist" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK__Product__Categor__3E52440B">
+          <End Role="Categories" Type="Self.Category" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ChapterIm__Chapt__5535A963">
+          <End Role="UpdateChapter" Type="Self.UpdateChapter" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ChapterImages" Type="Self.ChapterImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UpdateChapter">
+              <PropertyRef Name="ChapterID" />
+            </Principal>
+            <Dependent Role="ChapterImages">
+              <PropertyRef Name="ChapterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReadingHi__Produ__440B1D61">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ReadingHistory" Type="Self.ReadingHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="ReadingHistory">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UpdateCha__Produ__5165187F">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UpdateChapter" Type="Self.UpdateChapter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="UpdateChapter">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserRevie__Produ__4D94879B">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserReviews" Type="Self.UserReview" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="UserReviews">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Wishlist__Produc__48CFD27E">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Wishlist" Type="Self.Wishlist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Wishlist">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReadingHi__Chapt__571DF1D5">
+          <End Role="UpdateChapter" Type="Self.UpdateChapter" Multiplicity="0..1" />
+          <End Role="ReadingHistory" Type="Self.ReadingHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UpdateChapter">
+              <PropertyRef Name="ChapterID" />
+            </Principal>
+            <Dependent Role="ReadingHistory">
+              <PropertyRef Name="ChapterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReadingHi__UserI__4316F928">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ReadingHistory" Type="Self.ReadingHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="ReadingHistory">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserRevie__UserI__4CA06362">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserReviews" Type="Self.UserReview" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserReviews">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParentReview">
+          <End Role="UserReviews" Type="Self.UserReview" Multiplicity="0..1" />
+          <End Role="UserReviews1" Type="Self.UserReview" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserReviews">
+              <PropertyRef Name="ReviewID" />
+            </Principal>
+            <Dependent Role="UserReviews1">
+              <PropertyRef Name="ParentReviewID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Wishlist__UserID__47DBAE45">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Wishlist" Type="Self.Wishlist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Wishlist">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WebStory2Entities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="ChapterImages" EntityType="Self.ChapterImage" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="ReadingHistories" EntityType="Self.ReadingHistory" />
+          <EntitySet Name="UpdateChapters" EntityType="Self.UpdateChapter" />
+          <EntitySet Name="UserReviews" EntityType="Self.UserReview" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Wishlists" EntityType="Self.Wishlist" />
+          <AssociationSet Name="FK__Product__Categor__3E52440B" Association="Self.FK__Product__Categor__3E52440B">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ChapterIm__Chapt__5535A963" Association="Self.FK__ChapterIm__Chapt__5535A963">
+            <End Role="UpdateChapter" EntitySet="UpdateChapters" />
+            <End Role="ChapterImages" EntitySet="ChapterImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReadingHi__Produ__440B1D61" Association="Self.FK__ReadingHi__Produ__440B1D61">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ReadingHistory" EntitySet="ReadingHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UpdateCha__Produ__5165187F" Association="Self.FK__UpdateCha__Produ__5165187F">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="UpdateChapter" EntitySet="UpdateChapters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserRevie__Produ__4D94879B" Association="Self.FK__UserRevie__Produ__4D94879B">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="UserReviews" EntitySet="UserReviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Wishlist__Produc__48CFD27E" Association="Self.FK__Wishlist__Produc__48CFD27E">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Wishlist" EntitySet="Wishlists" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReadingHi__Chapt__571DF1D5" Association="Self.FK__ReadingHi__Chapt__571DF1D5">
+            <End Role="UpdateChapter" EntitySet="UpdateChapters" />
+            <End Role="ReadingHistory" EntitySet="ReadingHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReadingHi__UserI__4316F928" Association="Self.FK__ReadingHi__UserI__4316F928">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="ReadingHistory" EntitySet="ReadingHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserRevie__UserI__4CA06362" Association="Self.FK__UserRevie__UserI__4CA06362">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserReviews" EntitySet="UserReviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParentReview" Association="Self.FK_ParentReview">
+            <End Role="UserReviews" EntitySet="UserReviews" />
+            <End Role="UserReviews1" EntitySet="UserReviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Wishlist__UserID__47DBAE45" Association="Self.FK__Wishlist__UserID__47DBAE45">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Wishlist" EntitySet="Wishlists" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WebStory2ModelStoreContainer" CdmEntityContainer="WebStory2Entities1">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="WebStory2Model.Category">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChapterImages">
+            <EntityTypeMapping TypeName="WebStory2Model.ChapterImage">
+              <MappingFragment StoreEntitySet="ChapterImages">
+                <ScalarProperty Name="ImageID" ColumnName="ImageID" />
+                <ScalarProperty Name="ChapterID" ColumnName="ChapterID" />
+                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+                <ScalarProperty Name="ImageOrder" ColumnName="ImageOrder" />
+                <ScalarProperty Name="UploadedDate" ColumnName="UploadedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="WebStory2Model.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="PublicationYear" ColumnName="PublicationYear" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="ImageProcductURL" ColumnName="ImageProcductURL" />
+                <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReadingHistories">
+            <EntityTypeMapping TypeName="WebStory2Model.ReadingHistory">
+              <MappingFragment StoreEntitySet="ReadingHistory">
+                <ScalarProperty Name="HistoryID" ColumnName="HistoryID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="LastReadDate" ColumnName="LastReadDate" />
+                <ScalarProperty Name="ChapterID" ColumnName="ChapterID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UpdateChapters">
+            <EntityTypeMapping TypeName="WebStory2Model.UpdateChapter">
+              <MappingFragment StoreEntitySet="UpdateChapter">
+                <ScalarProperty Name="ChapterID" ColumnName="ChapterID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="EpisodeChapterName" ColumnName="EpisodeChapterName" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserReviews">
+            <EntityTypeMapping TypeName="WebStory2Model.UserReview">
+              <MappingFragment StoreEntitySet="UserReviews">
+                <ScalarProperty Name="ReviewID" ColumnName="ReviewID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ParentReviewID" ColumnName="ParentReviewID" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="ReviewDate" ColumnName="ReviewDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="WebStory2Model.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="RoleUser" ColumnName="RoleUser" />
+                <ScalarProperty Name="RegisteredDate" ColumnName="RegisteredDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Wishlists">
+            <EntityTypeMapping TypeName="WebStory2Model.Wishlist">
+              <MappingFragment StoreEntitySet="Wishlist">
+                <ScalarProperty Name="WishlistID" ColumnName="WishlistID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

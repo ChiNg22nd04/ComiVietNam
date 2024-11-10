@@ -1,0 +1,315 @@
+﻿@model DAPM2.Models.ProductDetailViewModel
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_DetailStoryPage.cshtml";
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Model.Product.Title</title>
+</head>
+<body>
+    <div class="container">
+        <div class="main-content">
+            <div class="story-container">
+                <!-- Hình ảnh truyện -->
+                <div class="story-image">
+                    <img src="@Model.Product.ImageProcductURL" alt="@Model.Product.Title" />
+                </div>
+                <!-- Thông tin truyện -->
+                <div class="story-info">
+                    <h3>@Model.Product.Title</h3>
+                    <div class="info-item">
+                        <span><strong>Tác giả:</strong></span>
+                        <span>@Model.Product.Author</span>
+                    </div>
+                    <div class="info-item">
+                        <span><strong>Tình trạng:</strong></span>
+                        <span>Đang cập nhật</span>
+                    </div>
+                    <div class="info-item">
+                        <span><strong>Năm xuất bản:</strong></span>
+                        <span>@Model.Product.PublicationYear</span>
+                    </div>
+                    <div class="info-item">
+                        <span><strong>Thể loại:</strong></span>
+                        <span>@Model.Product.Category.CategoryName</span>
+                    </div>
+                    <div class="info-item">
+                        <span><strong>Lượt xem:</strong></span>
+                        <span>
+                            @if (Model.Product.ViewCount != null && Model.Product.ViewCount > 0)
+                            {
+                                @Model.Product.ViewCount
+                            }
+                            else
+                            {
+                                <em class="no-views">Chưa có lượt xem</em>
+                            }
+                        </span>
+                    </div>
+                    <!-- Nút theo dõi -->
+                    <button class="read-btn follow-button add-to-wishlist-button @(Model.IsInWishlist ? "following" : "")" data-product-id="@Model.Product.ProductID">
+                        <i class="icon @(Model.IsInWishlist ? "icon-x" : "icon-heart")"></i>
+                        <span class="follow-text">@(Model.IsInWishlist ? "Hủy Theo Dõi" : "Theo Dõi")</span>
+                    </button>
+                    <button id="read-btn" class="read-btn" style="margin-left: 10px;">
+                        Đọc Truyện
+                    </button>
+
+                    <div id="message" style="margin-top: 10px; color: red; display: none;"></div> <!-- Phần tử hiển thị thông báo -->
+
+                    <script>
+                        document.getElementById('read-btn').onclick = function () {
+                            var productId = @Model.Product.ProductID;
+                            var chapterId = @Html.Raw(Model.Chapters.Any() ? Model.Chapters.First().ChapterID.ToString() : "null");
+
+                            if (chapterId) {
+                                // Nếu có chương, chuyển đến chương đầu tiên
+                                window.location.href = '@Url.Action("ReadingChapter", "Reading", new { id = "__productId__", chapterId = "__chapterId__" })'
+                                    .replace('__productId__', productId)
+                                    .replace('__chapterId__', chapterId);
+                            } else {
+                                // Nếu không có chương nào, hiển thị thông báo bên dưới nút
+                                var messageDiv = document.getElementById('message');
+                                messageDiv.innerHTML = "Không có chương nào để đọc.";
+                                messageDiv.style.display = 'block'; // Hiện thông báo
+
+                                // Tự động ẩn thông báo sau 3 giây
+                                setTimeout(function() {
+                                    messageDiv.style.display = 'none';
+                                }, 3000); // 3000 ms = 3 giây
+                            }
+                        };
+                    </script>
+
+                    @if (Session["RoleUser"] != null && Session["RoleUser"].ToString() == "Admin")
+                    {
+                        <a href="@Url.Action("UploadChapter", "Admin", new { productId = Model.Product.ProductID })">
+                            <button class="read-btn">Thêm Chương</button>
+                        </a>
+                    }
+                </div>
+            </div>
+
+            <div class="summary">
+                <div class="summary-title">Tóm tắt nội dung</div>
+                <div class="summary-content">@Model.Product.Content</div>
+            </div>
+
+            <div class="chapter">
+                <div class="summary-title">Chapter</div>
+                <div class="summary-content">
+                    @if (Model.Chapters != null && Model.Chapters.Count > 0)
+                    {
+                        foreach (var chapter in Model.Chapters)
+                        {
+                            <div class="chapter-item">
+                                <a href="@Url.Action("ReadingChapter", "Reading", new { id = Model.Product.ProductID, chapterId = chapter.ChapterID })">
+                                    <strong>@chapter.EpisodeChapterName</strong>
+                                    <p>@Model.GetDateAddedText(chapter.DateAdded)</p>
+                                </a>
+
+                                @if (Session["RoleUser"] != null && Session["RoleUser"].ToString() == "Admin")
+                                {
+                                    <a href="@Url.Action("EditChapter", "Admin", new { chapterId = chapter.ChapterID, productId = chapter.ProductID })" class="btn btn-edit">Sửa</a>
+                                    <!-- Delete form -->
+                                    <form action="@Url.Action("DeleteChapter", "Admin")" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn xóa chương này không?');">
+                                        <input type="hidden" name="id" value="@chapter.ChapterID" />
+                                        <input type="hidden" name="productId" value="@Model.Product.ProductID" /> <!-- Pass productId -->
+                                        <button type="submit" class="btn btn-danger">Xóa</button>
+                                    </form>
+
+                                    <!-- Image upload form -->
+                                    <form action="@Url.Action("ImageStory", "Admin", new { chapterId = chapter.ChapterID })" method="post" enctype="multipart/form-data" style="margin-top: 10px;">
+                                        <input type="hidden" name="productId" value="@Model.Product.ProductID" />
+                                        <button type="submit" class="btn btn-secondary">Thêm Ảnh</button>
+                                    </form>
+                                }
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p>Chưa có chương nào được đăng tải.</p>
+                    }
+                </div>
+
+                <div class="comments">
+                    <div class="comments-title">Bình luận</div>
+
+                    @if (Session["UserID"] != null)
+                    {
+                        <form action="@Url.Action("CommentStory", "Comment")" method="post" class="fixed-form">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="UserID" value="@Session["UserID"]" />
+                            <input type="hidden" name="ProductID" value="@Model.Product.ProductID" />
+                            <textarea name="Comment" rows="3" placeholder="Nhập bình luận của bạn..." required></textarea>
+                            <button type="submit" class="btn btn-primary">Gửi Bình luận</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <p>Bạn cần <a href="@Url.Action("Login", "Login")">đăng nhập</a> để có thể bình luận</p>
+                    }
+
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger fade show" role="alert" id="errorAlert">
+                            @TempData["ErrorMessage"]
+                        </div>
+                    }
+
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success fade show" role="alert" id="successAlert">
+                            @TempData["SuccessMessage"]
+                        </div>
+                    }
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            // Function to hide alerts
+                            function hideAlert(alertId) {
+                                var alertElement = document.getElementById(alertId);
+                                if (alertElement) {
+                                    alertElement.classList.add('hide'); // Start fading out
+                                    // Remove the alert after the transition duration
+                                    setTimeout(function () {
+                                        alertElement.remove(); // Remove the alert from the DOM
+                                    }, 700); // Matches the CSS transition duration
+                                }
+                            }
+
+                            // Hide the error alert after 5 seconds
+                            setTimeout(function () {
+                                hideAlert('errorAlert');
+                            }, 5000); // 5000 milliseconds = 5 seconds
+
+                            // Hide the success alert after 5 seconds
+                            setTimeout(function () {
+                                hideAlert('successAlert');
+                            }, 5000); // 5000 milliseconds = 5 seconds
+                        });
+                    </script>
+
+                    <div class="comment-list">
+                        <h4>Danh sách bình luận:</h4>
+                        @if (Model.UserReviews != null && Model.UserReviews.Count > 0)
+                        {
+                            foreach (var review in Model.UserReviews)
+                            {
+                                <div class="comment-item">
+                                    <div class="comment-header">
+                                        <strong>@(review.User?.FullName ?? "Người dùng không xác định"): </strong>
+                                        <p style="margin-left: 3px;">@review.Comment</p>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
+                                        <p style="margin: 0;"><em>@(review.ReviewDate?.ToString("dd/MM/yyyy") ?? "Không có ngày")</em></p>
+                                        @if (Session["UserID"] == null) // Check if user is not logged in
+                                        {
+                                            <a href="@Url.Action("Login", "Login")" class="reply-button">
+                                                <img src="~/Content/images/curved-arrow.png" alt="Reply" style="width: 15px; height: 15px; vertical-align: middle; margin-right: 5px;" />
+                                                Trả lời
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="#" class="reply-button" onclick="toggleCommentForm(event, 'form-@review.ReviewID')">
+                                                <img src="~/Content/images/curved-arrow.png" alt="Reply" style="width: 15px; height: 15px; vertical-align: middle; margin-right: 5px;" />
+                                                Trả lời
+                                            </a>
+                                        }
+                                    </div>
+
+                                    <div id="form-@review.ReviewID" style="display: none; margin-top: 10px;">
+                                        <form action="@Url.Action("ReplyComment", "Comment")" method="post" class="fixed-form">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="UserID" value="@Session["UserID"]" />
+                                            <input type="hidden" name="ProductID" value="@Model.Product.ProductID" />
+                                            <input type="hidden" name="ParentReviewID" value="@review.ReviewID" /> <!-- Add this line -->
+                                            <textarea name="Comment" rows="3" placeholder="Nhập bình luận của bạn..." required></textarea>
+                                            <button type="submit" class="btn btn-primary">Gửi Bình luận</button>
+                                        </form>
+                                    </div>
+
+                                    <div class="reply-container" id="reply-container-@review.ReviewID" style="margin-top: 10px;">
+                                        @foreach (var reply in Model.UserReviews.Where(r => r.ParentReviewID == review.ReviewID))
+                                        {
+                                            <div class="reply-item">
+                                                <div class="reply-header">
+                                                    <strong>@(reply.User?.FullName ?? "Người dùng không xác định"):</strong>
+                                                    <p class="comment-text">@reply.Comment</p>
+                                                </div>
+                                                <p class="review-date"><em>@(reply.ReviewDate?.ToString("dd/MM/yyyy") ?? "Không có ngày")</em></p>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p>Chưa có bình luận nào.</p>
+                        }
+                    </div>
+                    <script>
+                        function toggleCommentForm(event, formId) {
+                            event.preventDefault(); // Prevent the default anchor behavior
+                            var form = document.getElementById(formId);
+                            if (form.style.display === "none") {
+                                form.style.display = "block"; // Show the form
+                            } else {
+                                form.style.display = "none"; // Hide the form
+                            }
+                        }
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="top-story">Top 1</div>
+            <div class="top-story">Top 2</div>
+            <div class="top-story">Top 3</div>
+        </div>
+</body>
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function () {
+    $('.add-to-wishlist-button').click(function (e) {
+        e.preventDefault();
+        var button = $(this);
+        var productId = button.data('product-id');
+
+        $.ajax({
+            url: '@Url.Action("AddToWishlist", "Wishlist")',
+            type: 'POST',
+            data: { productId: productId },
+            success: function (response) {
+                alert(response.message);
+
+                if (response.success) {
+                    // Toggle following state
+                    button.toggleClass("following");
+                    // Update icon and text based on state
+                    const isFollowing = button.hasClass("following");
+                    button.find(".icon").attr("class", isFollowing ? "icon icon-x" : "icon icon-heart");
+                    button.find(".follow-text").text(isFollowing ? "Hủy Theo Dõi" : "Theo Dõi");
+                }
+
+                if (response.reload) {
+                    location.reload();
+                }
+            },
+            error: function () {
+                alert('Đã xảy ra lỗi, vui lòng thử lại.');
+            }
+        });
+    });
+});
+</script>
+

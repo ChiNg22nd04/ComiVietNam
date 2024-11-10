@@ -1,0 +1,58 @@
+﻿    @{
+        ViewBag.Title = "Register";
+        Layout = "~/Views/Shared/_RegisterPage.cshtml";
+    }
+
+    <link href="~/Content/css/login.css" rel="stylesheet" />
+    <!DOCTYPE html>
+    <html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Đăng ký</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <div class="home-button">
+                    <a href="@Url.Action("Index", "Home")">
+                        <img src="~/Content/images/back.png" alt="Back" />
+                    </a>
+                </div>
+                <h2>Đăng Ký Tài Khoản</h2>
+            </div>
+            <!-- Hiển thị thông báo lỗi nếu có -->
+            @if (!string.IsNullOrEmpty(ViewBag.error))
+            {
+                <div class="error-message">
+                    @ViewBag.error
+                </div>
+            }
+
+            <!-- Form cần có method="post" và action="/Login/Register" để gửi đến Controller -->
+        <form method="post" action="/Login/Register">
+            <!-- Sử dụng các thẻ để liên kết model với form -->
+            <label for="username">Tên đăng nhập:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="fullname">Họ Tên:</label>
+            <input type="text" id="fullname" name="fullname" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="passwordhash">Mật khẩu:</label>
+            <input type="password" id="passwordhash" name="passwordhash" required>
+
+            <label for="confirm-password">Nhập Lại Mật khẩu:</label>
+            <input type="password" id="confirm-password" name="ConfirmPassword" required>
+
+            <p class="login-press">
+                Bạn đã có tài khoản? <a href="@Url.Action("Login", "Login")">Đăng nhập</a>
+            </p>
+
+            <button type="submit">Đăng Ký</button>
+        </form>
+        </div>
+    </body>
+    </html>

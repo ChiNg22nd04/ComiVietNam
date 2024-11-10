@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "ManageCategories";
+    Layout = "~/Views/Shared/_CategoryLayout.cshtml";
+}
+
+<h2>Quản Lý Thể Loại</h2>
+<!-- Nút thêm truyện mới -->
+<div class="add-category">
+    <a href="@Url.Action("AddCategory", "Admin")" class="btn btn-add">Thêm Thể Loại Mới</a>
+</div>
+
+@if (Model.categories != null && Model.categories.Count > 0)
+{
+    <!-- Bảng hiển thị danh sách truyện -->
+    <table class="category-table">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Tên Thể Loại</th>
+                <th>Thao Tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.categories.Count; i++)
+            {
+                <tr>
+                    <td>@(i + 1)</td>
+                    <td>@Model.categories[i].CategoryName</td>
+                    <td>
+                        <a href="@Url.Action("EditCategory", "Admin", new { id = Model.categories[i].CategoryID })" class="btn btn-edit">Sửa</a>
+                        <a href="@Url.Action("DeleteCategory", "Admin", new { id = Model.categories[i].CategoryID })" class="btn btn-delete" onclick="return confirm('Bạn có chắc muốn xóa truyện này không?')">Xóa</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <!-- Thông báo nếu không có truyện -->
+    <div class="no-story">
+        <p>Chưa có truyện.</p>
+    </div>
+}

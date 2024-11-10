@@ -1,0 +1,53 @@
+﻿@model DAPM2.Models.User
+
+@{
+    ViewBag.Title = "EditProfile";
+    Layout = "~/Views/Shared/_ProfileLayout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+            <h2 class="mb-0">Edit Profile</h2>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("EditProfile", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.UserID)
+
+                <!-- Các trường cập nhật thông tin cá nhân -->
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FullName)
+                    @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email)
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+
+                <!-- Trường upload avatar -->
+                <!-- Hiển thị ảnh avatar hiện tại nếu có -->
+               
+                <div class="form-group">
+                    <img src="@(string.IsNullOrEmpty(Model.Avatar)
+                        ? Url.Content("~/Content/images/profile1.png")
+                        : Url.Content(Model.Avatar))"
+                         alt="Avatar" class="" style="width: 10%" />
+                </div>
+                
+                <div class="form-group">
+                    <label for="AvatarFile">Avatar</label>
+                    <input type="file" name="AvatarFile" class="form-control" />
+                </div>
+
+
+
+
+                <button type="submit" class="btn btn-primary">Save</button>
+            }
+
+        </div>
+    </div>
+</div>

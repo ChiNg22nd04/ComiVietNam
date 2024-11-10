@@ -1,0 +1,31 @@
+﻿
+@{
+    Layout = null;
+}
+<link href="~/Content/css/login.css" rel="stylesheet" />
+<div class="container">
+    <div class="home-button">
+        <a href="@Url.Action("Detail", "Detail", new { id = ViewBag.ProductID })">
+            <img src="~/Content/images/back.png" alt="Back" />
+        </a>
+    </div>
+    <h2>UploadChapter</h2>
+    @if (!string.IsNullOrEmpty(ViewBag.error))
+    {
+        <div class="error-message">
+            @ViewBag.error
+        </div>
+    }
+<form method="post" action="@Url.Action("UploadChapter", "Admin")">
+
+    <label for="productid">Product ID:</label>
+    <!-- Hidden input for product ID -->
+    <input type="hidden" id="productid" name="productid" value="@ViewBag.ProductID" />
+    <input type="text" id="productid-display" value="@ViewBag.ProductID" readonly required>
+
+    <label for="episodechaptername">Episode Chapter Name:</label>
+    <input type="text" id="episodechaptername" name="episodechaptername" required>
+
+    <button type="submit">Xác nhận</button>
+</form>
+</div>

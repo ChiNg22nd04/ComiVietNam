@@ -1,0 +1,51 @@
+﻿
+@{
+    Layout = null;
+}
+
+<link href="~/Content/css/login.css" rel="stylesheet" />
+<div class="container">
+    <div class="home-button">
+        <a href="@Url.Action("ManageStories", "Admin")">
+            <img src="~/Content/images/back.png" alt="Back" />
+        </a>
+    </div>
+    <h2>Thêm Truyện</h2>
+
+    @if (!string.IsNullOrEmpty(ViewBag.Error))
+    {
+        <div class="error-message">
+            @ViewBag.Error
+        </div>
+    }
+
+<form action="@Url.Action("AddStory", "Admin")" method="post" enctype="multipart/form-data">
+
+    <label for="title">Tiêu Đề:</label>
+    <input type="text" name="title" id="title" required />
+
+    <label for="author">Tác Giả:</label>
+    <input type="text" id="author" name="author" required />
+
+    <label for="publicationyear">Năm Xuất Bản:</label>
+    <input type="number" id="publicationyear" name="publicationyear" required />
+
+    <label for="category">Thể loại:</label>
+    <select id="category" name="CategoryID" required>
+        <option value="" disabled selected>Chọn thể loại</option>
+        @foreach (var category in ViewBag.categories)
+        {
+            <option value="@category.Value">@category.Text</option>
+        }
+    </select>
+
+
+    <label for="content">Nội Dung:</label>
+    <input type="text" id="content" name="content" required />
+
+    <label for="image">Chọn ảnh:</label>
+    <input type="file" name="imageFile" id="image" accept="image/*" required />
+
+    <button type="submit" class="btn btn-primary">Tải lên</button>
+</form>
+</div>

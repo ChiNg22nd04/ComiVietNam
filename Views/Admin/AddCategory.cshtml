@@ -1,0 +1,29 @@
+﻿
+@{
+    Layout = null;
+}
+
+<link href="~/Content/css/login.css" rel="stylesheet" />
+<div class="container">
+    <div class="home-button">
+        <a href="@Url.Action("ManageCategories", "Admin")">
+            <img src="~/Content/images/back.png" alt="Back" />
+        </a>
+    </div>
+    <h2>Thêm Thể Loại</h2>
+
+    @if (!string.IsNullOrEmpty(ViewBag.Error))
+    {
+        <div class="error-message">
+            @ViewBag.Error
+        </div>
+    }
+
+    <form action="@Url.Action("AddCategory", "Admin")" method="post" enctype="multipart/form-data">
+        <label for="CategoryName">Tên Thể Loại:</label>
+        <input type="text" name="CategoryName" id="CategoryName" required />
+
+        <button type="submit" class="btn btn-primary">Tải lên</button>
+    </form>
+</div>
+

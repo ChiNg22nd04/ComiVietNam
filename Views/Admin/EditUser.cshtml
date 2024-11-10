@@ -1,0 +1,72 @@
+﻿@model DAPM2.Models.User
+
+@{
+    ViewBag.Title = "Chỉnh Sửa Người Dùng";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Chỉnh Sửa Người Dùng</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Chỉnh Sửa</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.UserID)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.FullName, "Fullname", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserName, "Username", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email, "Email", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PasswordHash, "Password", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.PasswordHash, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PasswordHash, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Vai trò", htmlAttributes: new { @class = "control-label col-md-2", @style = "text-transform:capitalize;" })
+        <div class="col-md-10">
+            <select id="roleuser" name="roleuser" class="form-control">
+                <option value="Người Dùng" @(Model.RoleUser == "Người Dùng" ? "selected" : "")>Người dùng</option>
+                <option value="Admin" @(Model.RoleUser == "Admin" ? "selected" : "")>Admin</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn-success" />
+        </div>
+    </div>
+</div>
+}
+
+<div class="back-list">
+    <a href="@Url.Action("ManageUsers", "Admin")">Về Danh Sách</a>
+</div>

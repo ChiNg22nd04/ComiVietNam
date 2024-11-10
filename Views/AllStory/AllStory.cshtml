@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "AllStory";
+    Layout = "~/Views/Shared/_AllStoryLayout.cshtml";
+}
+
+
+<div class="content-container">
+    <div class="filter-section">
+        <h2>Lọc Truyện</h2>
+        <form method="get" action="@Url.Action("ListStory", "Story")">
+            <div>
+                <label for="category">Thể loại:</label>
+                <select id="category" name="categoryID">
+                    <option value="">Tất cả</option>
+                    @foreach (var category in Model.categories) // Giả định bạn có một danh sách thể loại trong model
+                    {
+                        <option value="@category.CategoryID">@category.CategoryName</option>
+                    }
+                </select>
+            </div>
+            <button type="submit">Lọc</button>
+        </form>
+    </div>
+
+    <div class="story-section">
+        <h2>Tất Cả Truyện</h2>
+
+        @if (Model.products != null && Model.products.Count > 0)
+        {
+            <ul class="story-list">
+                @foreach (var story in Model.products)
+                {
+                    <li class="story-item">
+                        <a href="@Url.Action("Detail", "Detail", new { id = story.ProductID })">
+                            <img src="@story.ImageProcductURL" alt="@story.Title" width="100" />
+                            <h3>@story.Title</h3>
+                        </a>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>Không có truyện trong danh mục này.</p>
+        }
+
+        <div class="pagination">
+            @if (Model.TotalPages > 1)
+            {
+                for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    if (i == Model.CurrentPage)
+                    {
+                        <button class="active">@i</button>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("ListStory", "Story", new { categoryID = ViewBag.CategoryID, page = i })">
+                            <button>@i</button>
+                        </a>
+                    }
+                }
+            }
+        </div>
+    </div>
+
+    <div class="highlight-section">
+        <h2>Nổi Bật</h2>
+        <div class="highlight-item selected">Top 1</div>
+        <div class="highlight-item">Top 2</div>
+        <div class="highlight-item">Top 3</div>
+    </div>
+</div>

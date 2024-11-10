@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "ProfileUser";
+    Layout = "~/Views/Shared/_ProfileLayout.cshtml";
+}
+
+
+<div class="profile-container">
+    <div class="profile-sidebar">
+        <div class="avatar-container">
+            <img src="@(string.IsNullOrEmpty(Model.Avatar)
+    ? Url.Content("~/Content/images/profile1.png")
+    : Url.Content(Model.Avatar))"
+                 alt="Avatar" class="avatar" />
+
+
+            <p class="account-title" style="color: #333">@Model.FullName</p>
+        </div>
+        <ul class="account-info">
+            <li><a href="#">Bình luận</a></li>
+            <li><a href="#">Thông báo</a></li>
+            <li><a href="@Url.Action("ChangePassword", "Profile", new { userID = Model.UserID })">Đổi mật khẩu</a></li>
+            <li><a href="@Url.Action("Logout", "Login")">Thoát</a></li>
+        </ul>
+    </div>
+
+    <div class="info-user">
+        <h3>Thông Tin Tài Khoản</h3>
+        <p><strong>Họ và tên:</strong> @(Model?.FullName ?? "Chưa có thông tin")</p>
+        <p><strong>Email:</strong> @(Model?.Email ?? "Chưa có thông tin")</p>
+        <p><strong>Vai trò:</strong> @(Model?.RoleUser ?? "Chưa có thông tin")</p>
+        <a class="btn-edit" href="@Url.Action("EditProfile", "Profile", new { id = Model?.UserID })">Chỉnh sửa</a>
+    </div>
+
+    <!-- Nơi hiển thị form EditProfile -->
+    <div id="editProfileContainer" class="mt-4"></div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#btnEditProfile').on('click', function (e) {
+            e.preventDefault(); // Ngăn chặn load trang mới
+
+            $.ajax({
+                url: '@Url.Action("EditProfile", "Profile", new { id = Model?.UserID })',
+                type: 'GET',
+                success: function (response) {
+                    $('#editProfileContainer').html(response);
+                },
+                error: function () {
+                    alert("Không thể tải thông tin chỉnh sửa. Vui lòng thử lại.");
+                }
+            });
+        });
+    });
+</script>

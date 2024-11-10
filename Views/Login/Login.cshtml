@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LoginPage.cshtml";
+}
+
+<link href="~/Content/css/login.css" rel="stylesheet" />
+
+<div class="container">
+    <div class="home-button">
+        <a href="@Url.Action("Index", "Home")">
+            <img src="~/Content/images/back.png" alt="Back" />
+        </a>
+    </div>
+    <h2>Đăng Nhập</h2>
+    @if (!string.IsNullOrEmpty(ViewBag.error))
+    {
+        <div class="error-message">
+            @ViewBag.error
+        </div>
+    }
+    <form method="post" action="@Url.Action("Login", "Login")">
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" required>
+
+        <label for="passwordhash">Mật khẩu:</label>
+        <input type="password" id="passwordhash" name="passwordhash" required>
+
+        <p class="login-press">
+            Bạn chưa có tài khoản? <a href="@Url.Action("Register", "Login")">Đăng ký</a>
+        </p>
+
+        <p class="login-press">
+            <a href="@Url.Action("ForgetPassword", "Login")">Quên mật khẩu?</a>
+        </p>
+
+
+        <button type="submit">Đăng Nhập</button>
+    </form>
+</div>
+

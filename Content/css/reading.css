@@ -1,0 +1,331 @@
+﻿/* Đặt font chữ cho toàn bộ trang */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif; /* Đặt font chữ mặc định là Arial */
+}
+/* Nếu bạn muốn bỏ gạch chân cho tất cả các đường link trên trang */
+a {
+    text-decoration: none; /* Bỏ gạch chân cho tất cả các đường link */
+}
+
+/* CSS cho header */
+header {
+    background-color: black;
+    padding: 20px;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: top 0.3s ease; /* Thêm chuyển tiếp để ẩn hiện mượt */
+}
+
+/* Khoảng trống phía trên nội dung để không bị header che */
+body {
+    padding-top: 100px; /* Điều chỉnh để không bị header che khuất nội dung */
+    background-color: #1c1c1c;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 96vw; /* Đảm bảo nội dung bên trong không sát mép màn hình */
+    margin: 0 auto; /* Căn giữa nội dung của header */
+}
+
+.logo {
+    color: white;
+    font-size: 24px;
+}
+
+/* Định dạng search bar */
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: flex-end; /* Căn phải thanh tìm kiếm */
+}
+
+    .search-bar input {
+        padding: 8px;
+        border-radius: 25px;
+        border: 1px solid #ccc;
+        outline: none;
+        width: 250px;
+        padding-left: 15px;
+        transition: border 0.3s ease;
+    }
+
+        .search-bar input:focus {
+            border: 1px solid #4CAF50;
+        }
+
+  
+        /* Hiệu ứng hover cho nút kính lúp */
+        .search-bar button:hover {
+            background-color: #ff8a80; /* Nền màu xanh lá khi hover */
+            color: white; /* Màu biểu tượng kính lúp đổi sang trắng khi hover */
+        }
+
+        .search-bar button i {
+            color: white; /* Màu mặc định của kính lúp */
+            transition: color 0.3s ease;
+        }
+
+        /* Đổi màu kính lúp khi hover */
+        .search-bar button:hover i {
+            color: white;
+        }
+
+        .search-bar button .search-icon {
+            width: 20px; /* Set width for the icon */
+            height: 20px; /* Set height for the icon */
+            vertical-align: middle; /* Align icon vertically */
+        }
+
+
+.profile-pic {
+    width: 30px; /* Kích thước ảnh đại diện */
+    height: 30px; /* Kích thước ảnh đại diện */
+    border-radius: 20%; /* Bo tròn ảnh */
+    margin-right: 10px; /* Khoảng cách giữa ảnh và email */
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Đảm bảo chiều cao của trang tối thiểu là 100% */
+}
+
+.content {
+    flex: 1; /* Cho phép nội dung giãn ra nếu cần */
+    padding: 20px; /* Padding cho nội dung */
+}
+
+footer {
+    background-color: black;
+    padding: 50px;
+    margin-top: auto; /* Pushes footer to the bottom */
+}
+
+.end h1 {
+    color: white;
+}
+
+
+.image-container {
+    display: flex; /* Sử dụng flexbox để căn giữa */
+    flex-direction: column; /* Đặt chiều dọc để hình ảnh và nút nằm chồng lên nhau */
+    justify-content: center; /* Căn giữa theo chiều dọc */
+    align-items: center; /* Căn giữa theo chiều ngang */
+    margin: 1px 0; /* Khoảng cách giữa các khung hình */
+}
+
+.responsive-image {
+    max-width: 100%; /* Đặt chiều rộng tối đa là 90% của khung chứa */
+    height: 1500px; /* Giữ tỉ lệ của hình ảnh */
+}
+.image-actions {
+    display: flex;
+    justify-content: flex-start; /* Để các nút nằm bên trái */
+    margin-bottom: 10px; /* Khoảng cách giữa các nút và hình ảnh */
+}
+
+.btn {
+    padding: 8px 12px; /* Khoảng cách trong nút */
+    margin-right: 10px; /* Khoảng cách giữa các nút */
+    border: none; /* Không có viền */
+    border-radius: 5px; /* Đường viền bo tròn */
+    cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột qua */
+    text-decoration: none; /* Không gạch chân văn bản */
+    font-size: 14px; /* Kích thước chữ */
+}
+
+.btn-edit {
+    background-color: #007bff; /* Màu nền cho nút sửa */
+    color: white; /* Màu chữ cho nút sửa */
+    transition: background-color 0.3s; /* Hiệu ứng chuyển màu nền */
+}
+
+    .btn-edit:hover {
+        background-color: #0056b3; /* Màu nền khi hover */
+    }
+
+.btn-delete {
+    background-color: #dc3545; /* Màu nền cho nút xóa */
+    color: white; /* Màu chữ cho nút xóa */
+    border: none; /* Không viền */
+    border-radius: 5px; /* Bo góc nút */
+    padding: 10px 15px; /* Khoảng cách bên trong nút */
+    font-size: 16px; /* Kích thước chữ */
+    cursor: pointer; /* Đổi con trỏ khi hover */
+    transition: background-color 0.3s, transform 0.2s; /* Hiệu ứng chuyển màu nền và phóng to */
+}
+
+    .btn-delete:hover {
+        background-color: #c82333; /* Màu nền khi hover */
+        transform: scale(1.05); /* Phóng to nút khi hover */
+    }
+
+    .btn-delete:active {
+        transform: scale(0.95); /* Nhỏ hơn khi nhấn */
+    }
+
+
+.circle-border {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px; /* Đường kính của vòng tròn */
+    height: 60px; /* Đường kính của vòng tròn */
+    border-radius: 50%; /* Tạo hình tròn */
+    background-color: #444; /* Màu nền cho vòng tròn (có thể điều chỉnh) */
+    display: flex; /* Sử dụng flexbox để căn giữa */
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Đổ bóng cho vòng tròn */
+}
+
+.btn-top {
+    background-color: transparent; /* Làm nền trong suốt */
+    border: none; /* Không viền */
+    cursor: pointer; /* Đổi con trỏ khi hover */
+    padding: 10px; /* Loại bỏ padding */
+}
+    .btn-top img {
+        filter: invert(100%); /* Đổi màu ảnh mũi tên lên thành trắng */
+    }
+
+.up-arrow-icon {
+    width: 40px; /* Chiều rộng biểu tượng */
+    height: 40px; /* Chiều cao biểu tượng */
+    transition: transform 0.3s ease; /* Hiệu ứng phóng to khi hover */
+    /*filter: brightness(0) invert(1);*/ /* Đổi màu thành trắng */
+}
+
+.btn-top:hover .up-arrow-icon {
+    transform: scale(1.1); /* Phóng to biểu tượng khi hover */
+}
+
+/* Bố cục điều hướng với Flexbox */
+.chapter-navigation {
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: space-between; /* Nút và tên chương được giãn đều */
+    gap: 10px;
+    margin: 20px 0;
+    position: relative; /* Đảm bảo tên chương căn chuẩn */
+}
+
+/* Các ô chứa nút với kích thước cố định */
+.nav-container {
+    width: 180px; /* Kích thước cố định cho nút */
+    display: flex;
+    justify-content: center; /* Căn giữa nút trong khung chứa */
+}
+
+/* Nút điều hướng */
+.btn-nav {
+    background-color: #444;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    width: 100%; /* Nút chiếm đủ khung chứa */
+    text-align: center; /* Căn giữa chữ */
+    display: block;
+}
+
+    .btn-nav:hover {
+        background-color: #45a049;
+        transform: scale(1.05);
+    }
+
+    .btn-nav:active {
+        background-color: #3e8e41;
+        transform: scale(0.95);
+    }
+
+/* Tên chương căn giữa */
+.chapter-title {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    flex-grow: 1; /* Tên chương tự động mở rộng */
+    margin: 0 15px; /* Khoảng cách với hai nút */
+    color: #f1f1f1;
+}
+
+/* Responsive: Chuyển sang dạng cột khi màn hình nhỏ */
+@media (max-width: 768px) {
+    .chapter-navigation {
+        flex-direction: column; /* Bố cục dạng cột */
+        align-items: center;
+    }
+
+    .nav-container {
+        width: 100%; /* Nút chiếm toàn bộ chiều ngang */
+        margin-bottom: 10px;
+    }
+
+    .chapter-title {
+        margin: 10px 0; /* Khoảng cách trên dưới với các nút */
+    }
+}
+.arrow-icon {
+    width: 16px;
+    height: 16px;
+    margin: 0 5px;
+    vertical-align: middle;
+    transition: transform 0.3s ease;
+}
+    .arrow-icon:hover {
+        transform: scale(1.2);
+    }
+.dropdown-container {
+    margin-top: 20px; /* Khoảng cách phía trên */
+}
+
+.chapter-dropdown {
+    padding: 10px; /* Khoảng cách trong dropdown */
+    font-size: 16px; /* Kích thước chữ */
+    border: 1px solid #ccc; /* Viền */
+    border-radius: 4px; /* Bo góc */
+}
+
+/* Breadcrumb Container */
+.breadcrumb {
+    display: flex;
+    align-items: center; /* Center items vertically */
+    padding: 10px 20px; /* Add some padding around the breadcrumb */
+    background-color: #f8f9fa; /* Light background color for visibility */
+    background-color: #333;
+    border-radius: 5px; /* Optional: Rounded corners */
+}
+
+/* Breadcrumb Items */
+.breadcrumb-item {
+    color: #66b2ff;
+    font-size: 1rem; /* Adjust font size */
+    margin: 0 10px; /* Space between items */
+}
+
+/* Separator Styling */
+.separator {
+    color: #6c757d; /* A lighter color for the separator */
+    font-weight: bold; /* Make the separator bold */
+}
+
+/* Optional: Change color on hover */
+.breadcrumb-item:hover {
+    cursor: pointer; /* Change cursor to pointer */
+}
+p{
+    color: white;
+}

@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "ManageUsers";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Quản Lý Người Dùng</h2>
+
+<!-- Nút thêm người dùng mới -->
+<div class="add-user">
+    <a href="@Url.Action("AddUser", "Admin")" class="btn btn-add">Thêm Người Dùng Mới</a>
+</div>
+
+<!-- Bảng hiển thị danh sách người dùng -->
+<table class="user-table">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Tên Người Dùng</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Vai Trò</th>
+            <th>Thao Tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @* Giả sử bạn có một Model danh sách người dùng *@
+        @for (int i = 0; i < Model.Users.Count; i++)
+        {
+            <tr>
+                <td>@(i + 1)</td>
+                <td>@Model.Users[i].FullName</td>
+                <td>@Model.Users[i].UserName</td>
+                <td>@Model.Users[i].Email</td>
+                <td>@Model.Users[i].RoleUser</td>
+                <td>
+                    <a href="@Url.Action("EditUser", "Admin", new { id = Model.Users[i].UserID })" class="btn btn-edit">Sửa</a>
+                    <a href="@Url.Action("DeleteUser", "Admin", new { id = Model.Users[i].UserID })" class="btn btn-delete" onclick="return confirm('Bạn có chắc muốn xóa người dùng này không?')">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3c0976abde2d4a6c824ece6b9c0038a5" Name="Diagram1">
+        <EntityTypeShape EntityType="WebStory2Model.Category" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebStory2Model.ChapterImage" Width="1.5" PointX="7.5" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebStory2Model.Product" Width="1.5" PointX="3" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebStory2Model.ReadingHistory" Width="1.5" PointX="7.5" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebStory2Model.UpdateChapter" Width="1.5" PointX="5.25" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebStory2Model.UserReview" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebStory2Model.User" Width="1.5" PointX="6" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebStory2Model.Wishlist" Width="1.5" PointX="8.25" PointY="2.5" IsExpanded="true" />
+        <AssociationConnector Association="WebStory2Model.FK__Product__Categor__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="WebStory2Model.FK__ChapterIm__Chapt__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="WebStory2Model.FK__ReadingHi__Produ__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="WebStory2Model.FK__UpdateCha__Produ__5165187F" ManuallyRouted="false" />
+        <AssociationConnector Association="WebStory2Model.FK__UserRevie__Produ__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="WebStory2Model.FK__Wishlist__Produc__48CFD27E" ManuallyRouted="false" />
+        <AssociationConnector Association="WebStory2Model.FK__ReadingHi__Chapt__571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="WebStory2Model.FK__ReadingHi__UserI__4316F928" ManuallyRouted="false" />
+        <AssociationConnector Association="WebStory2Model.FK__UserRevie__UserI__4CA06362" ManuallyRouted="false" />
+        <AssociationConnector Association="WebStory2Model.FK_ParentReview" ManuallyRouted="false" />
+        <AssociationConnector Association="WebStory2Model.FK__Wishlist__UserID__47DBAE45" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
