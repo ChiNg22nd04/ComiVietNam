@@ -14,7 +14,7 @@
     padding: 30px 25px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    width: 320px;
+    width: 500px; /*sửa UI*/
     position: relative;
 }
 
@@ -34,7 +34,7 @@ form label {
 }
 
 form input {
-    width: 100%;
+    width: 95%; /*sửa UI*/
     padding: 12px;
     margin-bottom: 15px;
     border: 1px solid #ddd;
@@ -44,14 +44,14 @@ form input {
 }
 
     form input:focus {
-        border-color: #28a745;
+        border-color: #403b3d; /* sửa UI */
         outline: none;
     }
 
 button {
     width: 100%;
     padding: 12px;
-    background-color: #28a745;
+    background-color: #403b3d; /* sửa UI */
     border: none;
     color: white;
     font-weight: bold;
@@ -62,7 +62,7 @@ button {
 }
 
     button:hover {
-        background-color: #218838;
+        background-color: #665e61; /* sửa UI */
     }
 
 .error-message {
@@ -83,6 +83,7 @@ button {
 }
 
 .home-button img {
+    margin-top: 11px; /* sửa UI */
     width: 24px;
     cursor: pointer;
 }
