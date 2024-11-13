@@ -120,53 +120,55 @@
         </div>
     </header>
 
-    <section class="featured">
-        <h2>Truyện Xem Nhiều Nhất</h2>
-        <a href="@Url.Action("AllStory", "AllStory", new { categoryID = 0 })" class="view-all">Xem tất cả</a>
-        <div class="featured-stories">
-            @foreach (var story in Model.products)
-            {
-                <div class="story-card" data-id="@story.ProductID">
-                    <img src="@story.ImageProcductURL" alt="@story.Title" class="story-image" />
-                    <h3>@story.Title</h3>
-                    <br />
-                    <p class="view-count">@story.ViewCount lượt xem</p> <!-- Lượt xem ngay dưới tiêu đề -->
-                </div>
-            }
-        </div>
-    </section>
+    <div class="content-body">
+        <section class="featured">
+            <h2>Truyện Xem Nhiều Nhất</h2>
+            <a href="@Url.Action("AllStory", "AllStory", new { categoryID = 0 })" class="view-all">Xem tất cả</a>
+            <div class="featured-stories">
+                @foreach (var story in Model.products)
+                {
+                    <div class="story-card" data-id="@story.ProductID">
+                        <img src="@story.ImageProcductURL" alt="@story.Title" class="story-image" />
+                        <h3>@story.Title</h3>
+                        <br />
+                        <p class="view-count">@story.ViewCount lượt xem</p> <!-- Lượt xem ngay dưới tiêu đề -->
+                    </div>
+                }
+            </div>
+        </section>
 
-    <section class="featured">
-        <h2>Truyện Mới Cập Nhật</h2>
-        <a href="@Url.Action("AllStory", "AllStory", new { categoryID = 0 })" class="view-all">Xem tất cả</a>
-        <div class="featured-stories">
-            @foreach (var story in Model.recentlyUpdatedStories)
-            {
-                //var latestChapter = story.UpdateChapters.ToList().OrderByDescending(uc => uc.DateAdded).FirstOrDefault();
-                var latestChapter = story.UpdateChapters.OrderByDescending(uc => uc.DateAdded).FirstOrDefault();
-                <div class="story-card" data-id="@story.ProductID">
-                    <img src="@story.ImageProcductURL" alt="@story.Title" class="story-image" />
-                    <h3>@story.Title</h3>
-                    <p>@latestChapter.EpisodeChapterName</p>
-                    <p>@Model.GetDateAddedText(latestChapter.DateAdded)</p>
-                </div>
-            }
-        </div>
-    </section>
+        <section class="featured">
+            <h2>Truyện Mới Cập Nhật</h2>
+            <a href="@Url.Action("AllStory", "AllStory", new { categoryID = 0 })" class="view-all">Xem tất cả</a>
+            <div class="featured-stories">
+                @foreach (var story in Model.recentlyUpdatedStories)
+                {
+                    //var latestChapter = story.UpdateChapters.ToList().OrderByDescending(uc => uc.DateAdded).FirstOrDefault();
+                    var latestChapter = story.UpdateChapters.OrderByDescending(uc => uc.DateAdded).FirstOrDefault();
+                    <div class="story-card" data-id="@story.ProductID">
+                        <img src="@story.ImageProcductURL" alt="@story.Title" class="story-image" />
+                        <h3>@story.Title</h3>
+                        <p>@latestChapter.EpisodeChapterName</p>
+                        <p>@Model.GetDateAddedText(latestChapter.DateAdded)</p>
+                    </div>
+                }
+            </div>
+        </section>
 
-    <section class="featured">
-        <h2>Truyện Mới</h2>
-        <a href="@Url.Action("AllStory", "AllStory", new { categoryID = 0 })" class="view-all">Xem tất cả</a>
-        <div class="featured-stories">
-            @foreach (var story in Model.recentlyAddedStories)
-            {
-                <div class="story-card" data-id="@story.ProductID">
-                    <img src="@story.ImageProcductURL" alt="@story.Title" class="story-image" />
-                    <h3>@story.Title</h3>
-                </div>
-            }
-        </div>
-    </section>
+        <section class="featured">
+            <h2>Truyện Mới</h2>
+            <a href="@Url.Action("AllStory", "AllStory", new { categoryID = 0 })" class="view-all">Xem tất cả</a>
+            <div class="featured-stories">
+                @foreach (var story in Model.recentlyAddedStories)
+                {
+                    <div class="story-card" data-id="@story.ProductID">
+                        <img src="@story.ImageProcductURL" alt="@story.Title" class="story-image" />
+                        <h3>@story.Title</h3>
+                    </div>
+                }
+            </div>
+        </section>
+    </div>
 
     <footer>
         <div class="end">
