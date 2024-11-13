@@ -197,6 +197,7 @@
     <Content Include="Content\css\allstory.css" />
     <Content Include="Content\css\category.css" />
     <Content Include="Content\css\detail-story.css" />
+    <Content Include="Content\css\editProfile.css" />
     <Content Include="Content\css\footer.css" />
     <Content Include="Content\css\header.css" />
     <Content Include="Content\css\history.css" />

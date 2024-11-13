@@ -18,23 +18,18 @@ namespace DAPM2.Controllers
         // GET: Profile
         public ActionResult ProfileUser()
         {
-            // Giả sử bạn đã lưu thông tin người dùng trong session khi đăng nhập
             var email = Session["Email"]?.ToString();
-
-            // Kiểm tra xem username có phải null không
             if (string.IsNullOrEmpty(email))
             {
-                return RedirectToAction("Login", "Login"); // Chuyển hướng đến trang đăng nhập nếu không có người dùng
+                return RedirectToAction("Login", "Login");
             }
 
             var user = database.Users.FirstOrDefault(u => u.Email == email);
-
             if (user == null)
             {
                 return HttpNotFound();
             }
 
-            // Tạo ProfileViewModel từ thông tin người dùng
             var model = new User
             {
                 UserID = user.UserID,
@@ -43,12 +38,11 @@ namespace DAPM2.Controllers
                 Avatar = user.Avatar,
                 Email = user.Email,
                 RoleUser = user.RoleUser,
-                Categories = CategoryService.GetAllCategories() // Lấy danh sách danh mục
+                Categories = CategoryService.GetAllCategories()
             };
 
             return View(model);
         }
-
 
         public ActionResult ChangePassword(int userID)
         {
@@ -102,19 +96,22 @@ namespace DAPM2.Controllers
 
 
         //Chưa sửa xong đổi mật khẩu
-
-        public ActionResult EditProfile(int id)
+        public ActionResult EditProfile(int? id)
         {
-            var user = database.Users.Find(id);
-            var categories = CategoryService.GetAllCategories();
+            if (!id.HasValue)
+            {
+                TempData["ErrorMessage"] = "Tài khoản không tồn tại.";
+                return RedirectToAction("ProfileUser");
+            }
 
+            var user = database.Users.Find(id.Value);
             if (user == null)
             {
                 TempData["ErrorMessage"] = "Tài khoản không tồn tại.";
-                return RedirectToAction("ProfileUser", "Profile");
+                return RedirectToAction("ProfileUser");
             }
 
-            ViewBag.Categories = categories;
+            ViewBag.Categories = CategoryService.GetAllCategories();
             return View(user);
         }
 
@@ -123,49 +120,39 @@ namespace DAPM2.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Tìm người dùng trong cơ sở dữ liệu theo UserID
                 var existingUser = database.Users.Find(user.UserID);
-
                 if (existingUser == null)
                 {
                     TempData["ErrorMessage"] = "Tài khoản không tồn tại.";
-                    return RedirectToAction("ProfileUser", "Profile");
+                    return RedirectToAction("ProfileUser");
                 }
 
-                // Cập nhật các trường đã thay đổi
-                if (user.FullName != existingUser.FullName)
-                {
-                    existingUser.FullName = user.FullName;
-                }
+                // Cập nhật các trường thông tin cá nhân
+                existingUser.FullName = user.FullName ?? existingUser.FullName;
+                existingUser.Email = user.Email ?? existingUser.Email;
 
-                if (user.Email != existingUser.Email)
-                {
-                    existingUser.Email = user.Email;
-                }
-
-                // Kiểm tra và cập nhật avatar nếu có
+                // Kiểm tra xem người dùng có upload ảnh avatar mới không
                 if (AvatarFile != null && AvatarFile.ContentLength > 0)
                 {
-                    var fileName = $"{user.UserID}_{Path.GetFileName(AvatarFile.FileName)}";
+                    var extension = Path.GetExtension(AvatarFile.FileName);
+                    var fileName = $"{user.UserID}_{Path.GetFileNameWithoutExtension(AvatarFile.FileName)}{extension}";
                     var path = Path.Combine(Server.MapPath("~/Content/images"), fileName);
-
-                    // Lưu file avatar
                     AvatarFile.SaveAs(path);
-                    existingUser.Avatar = $"/Content/images/{fileName}";
-                }
-                else if (string.IsNullOrEmpty(existingUser.Avatar))
-                {
-                    // Nếu không có ảnh mới và avatar hiện tại trống, giữ lại avatar cũ
-                    existingUser.Avatar = existingUser.Avatar ?? "/Content/images/profile1.png";
+                    existingUser.Avatar = $"/Content/images/{fileName}"; // Cập nhật Avatar mới vào cơ sở dữ liệu
                 }
 
-                // Lưu các thay đổi vào cơ sở dữ liệu
-                database.SaveChanges();
+                // Lưu lại thông tin thay đổi vào cơ sở dữ liệu
+                database.SaveChanges();  // Đây là bước quan trọng để lưu thông tin vào cơ sở dữ liệu
+
+                // Sau khi lưu thành công vào cơ sở dữ liệu, cập nhật lại session
+                Session["FullName"] = existingUser.FullName;
+                Session["Email"] = existingUser.Email;
 
                 TempData["SuccessMessage"] = "Cập nhật tài khoản thành công.";
-                return RedirectToAction("ProfileUser", "Profile");
+                return RedirectToAction("ProfileUser"); // Chuyển hướng về trang hồ sơ người dùng
             }
 
-            // Nếu model không hợp lệ, trả lại form với lỗi
             return View(user);
         }
 
