@@ -3,7 +3,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif; /* Đặt font chữ mặc định là Arial */
 }
 /* Nếu bạn muốn bỏ gạch chân cho tất cả các đường link trên trang */
 a {
