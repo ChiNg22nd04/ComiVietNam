@@ -12,7 +12,6 @@ header {
 
 /* Khoảng trống phía trên nội dung để không bị header che */
 body {
-    padding-top: 100px; /* Điều chỉnh để không bị header che khuất nội dung */
 }
 
 .header-container {

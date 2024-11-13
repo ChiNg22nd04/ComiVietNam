@@ -51,7 +51,7 @@ form input {
 button {
     width: 100%;
     padding: 12px;
-    background-color: #403b3d; /* sửa UI */
+    background-color: #e1814c; /* sửa UI */
     border: none;
     color: white;
     font-weight: bold;
@@ -62,7 +62,7 @@ button {
 }
 
     button:hover {
-        background-color: #665e61; /* sửa UI */
+        background-color: #45a049; /* sửa UI */
     }
 
 .error-message {

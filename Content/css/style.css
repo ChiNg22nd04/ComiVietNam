@@ -10,7 +10,7 @@
 
 /* Khoảng trống phía trên nội dung để không bị header che */
 body {
-    padding-top: 100px; /* Điều chỉnh để không bị header che khuất nội dung */
+    padding-top: 40px; /* Điều chỉnh để không bị header che khuất nội dung */
 }
 
 .header-container {
@@ -46,8 +46,8 @@ body {
     background-color: #ffffff; /*sửa UI*/
     padding: 20px;
     border-radius: 10px;
-    margin: 0px 70px 80px 70px; /*sửa UI*/
-    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px; /*sửa UI*/
+    margin: 0px 66px 55px; /*sửa UI*/
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
     .featured h2 {
