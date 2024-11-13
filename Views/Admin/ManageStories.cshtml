@@ -1,6 +1,8 @@
 ﻿@{
     ViewBag.Title = "ManageStories";
-    Layout = "~/Views/Shared/_ManageStoryLayout.cshtml";
+    //Layout = "~/Views/Shared/_ManageStoryLayout.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
 }
 
 <h2>Quản Lý Truyện</h2>
@@ -21,7 +23,7 @@
                 <th>Tác Giả</th>
                 <th>Năm Xuất Bản</th>
                 <th>Thể Loại</th>
-                <th>Nội Dung</th>
+                <th style="width: 500px">Nội Dung</th>
                 <th>Thao Tác</th>
             </tr>
         </thead>
@@ -34,8 +36,8 @@
                     <td>@Model.Products[i].Author</td>
                     <td>@Model.Products[i].PublicationYear</td>
                     <td>@Model.Products[i].Category.CategoryName</td> <!-- Hiển thị CategoryName -->
-                    <td>@Model.Products[i].Content</td>
-                    <td>
+                    <td style="width: 500px">@Model.Products[i].Content</td>
+                    <td >
                         <a href="@Url.Action("EditStory", "Admin", new { id = Model.Products[i].ProductID })" class="btn btn-edit">Sửa</a>
                         <a href="@Url.Action("DeleteStory", "Admin", new { id = Model.Products[i].ProductID })" class="btn btn-delete" onclick="return confirm('Bạn có chắc muốn xóa truyện này không?')">Xóa</a>
                     </td>

@@ -5,32 +5,9 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
     background-color: #f4f4f4;
 }
 
-header {
-    background-color: #333;
-    padding: 20px;
-    width: 100vw;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-}
-
-.header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 96vw;
-    margin: 0 auto;
-    color: white;
-}
-
-.logo {
-    font-size: 24px;
-}
 
 nav ul {
     list-style-type: none;
@@ -59,12 +36,13 @@ nav ul {
     }
 
 .content-container {
-    padding-top: 80px; /* Để tránh bị header che khuất */
+    padding: 100px 0; /* Để tránh bị header che khuất */
     margin: 20px auto;
     width: 90vw;
 }
 
 /* Thêm style cho bảng quản lý người dùng */
+
 .user-table {
     width: 100%;
     border-collapse: collapse;
@@ -87,6 +65,60 @@ nav ul {
     }
 
     .user-table tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+/*story-table*/
+.story-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+}
+
+    .story-table th, .story-table td {
+        border: 1px solid #dddddd;
+        padding: 12px 15px;
+    }
+
+    .story-table th {
+        background-color: #f2f2f2;
+    }
+
+    .story-table tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .story-table tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+
+  /*category*/
+
+.category-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+}
+
+    .category-table th, .category-table td {
+        border: 1px solid #dddddd;
+        padding: 12px 15px;
+    }
+
+    .category-table th {
+        background-color: #f2f2f2;
+    }
+
+    .category-table tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .category-table tbody tr:hover {
         background-color: #f1f1f1;
     }
 
@@ -121,8 +153,36 @@ nav ul {
     }
 
 .btn:hover {
-    opacity: 0.8;
+    scale: 1.1;
 }
+
+.add-user {
+    margin: 20px 0;
+}
+
+    .add-user .btn-add {
+        display: inline-block;
+    }
+
+
+.add-story {
+    margin: 20px 0;
+}
+
+    .add-story .btn-add {
+        display: inline-block;
+    }
+
+
+.add-category {
+    margin: 20px 0;
+}
+
+    .add-category .btn-add {
+        display: inline-block;
+    }
+
+
 
 /* Thêm style cho form thêm người dùng */
 form {
