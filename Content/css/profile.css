@@ -71,6 +71,106 @@ body {
             color: #e1814c;
         }
 
+/* review */
+.user-review {
+    width: 70%;
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+  
+    /* Table styling for user review */
+    .user-review table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        font-size: 16px;
+    }
+
+    .user-review th,
+    .user-review td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #e6e6e6;
+    }
+
+    .user-review th {
+        background-color: #e1814c;
+        color: white;
+        font-weight: bold;
+    }
+
+    .user-review tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .user-review tbody tr:hover {
+        background-color: #f1f1f1;
+        transition: background-color 0.3s;
+    }
+
+    .user-review td {
+        color: #555;
+    }
+
+        .user-review td:first-child {
+            font-weight: bold;
+        }
+
+    .user-review .table {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Adjusting table header */
+    .user-review .title {
+        font-size: 26px;
+        color: #333;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 3px solid #e1814c;
+        display: flex;
+        align-items: center;
+    }
+
+        .user-review .title::before {
+            content: "";
+            width: 5px;
+            height: 26px;
+            background-color: #e1814c;
+            margin-right: 10px;
+            border-radius: 3px;
+        }
+
+    .user-review .card-body p {
+        color: #666;
+        font-size: 18px;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+.info-user h3 {
+    font-size: 26px;
+    color: #333;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #e1814c;
+    display: flex;
+    align-items: center;
+}
+
+    .info-user h3::before {
+        content: "";
+        width: 5px;
+        height: 26px;
+        background-color: #e1814c;
+        margin-right: 10px;
+        border-radius: 3px;
+    }
+
 .info-user {
     width: 70%;
     background-color: #fff;
@@ -78,6 +178,17 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
+
+    .info-user p {
+        font-size: 16px;
+        color: #666;
+        margin: 10px 0;
+    }
+
+    .info-user strong {
+        color: #333;
+    }
 
     .info-user h3 {
         font-size: 26px;

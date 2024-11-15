@@ -156,6 +156,27 @@ namespace DAPM2.Controllers
             return View(user);
         }
 
+        public ActionResult UserComments(int userID)
+        {
+            var user = database.Users.Find(userID);
+            if (user == null)
+            {
+                TempData["ErrorMessage"] = "Người dùng không tồn tại.";
+                return RedirectToAction("ProfileUser");
+            }
+
+            var comments = database.UserReviews
+                .Where(r => r.UserID == userID)
+                .ToList();  
+
+            var viewModel = new UserCommentsViewModel
+            {
+                User = user,
+                Comments = comments
+            };
+            return View("UserReview", viewModel);
+        }
+
 
     }
 }

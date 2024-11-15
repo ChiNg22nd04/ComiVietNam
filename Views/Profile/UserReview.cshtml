@@ -1,0 +1,62 @@
+﻿@model DAPM2.Models.UserCommentsViewModel
+
+
+@{
+    ViewBag.Title = "UserReview";
+    Layout = "~/Views/Shared/_ProfileLayout.cshtml";
+}
+
+<div class="profile-container">
+    <div class="profile-sidebar">
+        <div class="avatar-container">
+            <img src="@(string.IsNullOrEmpty(Model.User.Avatar)
+                ? Url.Content("~/Content/images/profile1.png")
+                : Url.Content(Model.User.Avatar))"
+                 alt="Avatar" class="avatar" />
+            <p class="account-title" style="color: #333">@Model.User.FullName</p>
+        </div>
+        <ul class="account-info">
+            <li><a href="@Url.Action("ProfileUser", "Profile")">Thông tin tài khoản</a></li>
+            <li><a href="@Url.Action("UserComments", "Profile", new { userID = Model.User.UserID })">Bình luận</a></li>
+            <li><a href="@Url.Action("ChangePassword", "Profile", new { userID = Model.User.UserID })">Đổi mật khẩu</a></li>
+            <li><a href="@Url.Action("Logout", "Login")">Thoát</a></li>
+        </ul>
+    </div>
+
+    <div class="user-review">
+        <div class="card shadow-sm">
+            <h3 class="title">Bình luận của tôi</h3>
+            <div class="card-body">
+                @if (Model.Comments != null && Model.Comments.Any())
+                {
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Tên sách</th>
+                                <th>Bình luận</th>
+                                <th>Ngày bình luận</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var comment in Model.Comments)
+                            {
+                                <tr>
+                                    <td>@comment.ProductID</td>
+                                    <td>@comment.Comment</td>
+                                    <td>@comment.ReviewDate</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>Người dùng chưa có bình luận nào.</p>
+                }
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
