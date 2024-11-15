@@ -43,6 +43,10 @@ namespace DAPM2.Controllers
                     return HttpNotFound(); // Xử lý nếu không tìm thấy sản phẩm với bình luận
                 }
 
+                // Đếm số lượng người theo dõi
+                int followerCount = GetFollowerCount(id);
+                ViewBag.FollowerCount = followerCount;
+
                 // Truyền tên danh mục vào ViewBag
                 ViewBag.CategoryName = product.Category?.CategoryName;
 
@@ -77,7 +81,14 @@ namespace DAPM2.Controllers
                 return context.Wishlists.Any(w => w.UserID == userId && w.ProductID == productId);
             }
         }
-
+        public int GetFollowerCount(int productId)
+        {
+            using (var context = new WebStory2Entities1())
+            {
+                // Đếm số lượng bản ghi trong bảng Wishlist mà có ProductID tương ứng
+                return context.Wishlists.Count(w => w.ProductID == productId);
+            }
+        }
         private int? GetCurrentUserId()
         {
             using (var context = new WebStory2Entities1())

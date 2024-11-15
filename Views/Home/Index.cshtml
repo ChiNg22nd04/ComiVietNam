@@ -18,7 +18,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang chủ</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
@@ -29,7 +28,7 @@
                 <ul>
                     <li class="margin-right"><a class="text-dark" href="@Url.Action("Index", "Home")">Trang Chủ</a></li>
                     <li class="dropdown margin-right">
-                        <a class="text-dark" href="#">Thể Loại</a>
+                        <a class="text-dark" href="@Url.Action("AllStory", "AllStory", new { categoryID = 0 })">Thể Loại</a>
                         <ul class="dropdown-menu">
                             <li>
                                 <a class="text-dark" href="@Url.Action("AllStory", "AllStory", new { categoryID = 0 })">
@@ -209,8 +208,11 @@
 
                 </div>
             </div>
+        </div>
     </footer>
 </body>
+</html>
+
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -266,4 +268,3 @@
     });
 
 </script>
-</html>

@@ -1,4 +1,17 @@
-﻿
+﻿﻿
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+.content-container {
+    flex: 1;
+}
+
+footer {
+    width: 100%;
+}
+
 .end {
     background-color: #e1814c;
     display: flex;

@@ -1,4 +1,4 @@
-﻿@{
+﻿﻿@{
     ViewBag.Title = "ListStory";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
@@ -31,7 +31,7 @@
         }
         else
         {
-            <p>Không có truyện trong danh mục này.</p>
+            <p class="no-views">Không có truyện trong danh mục này.</p>
         }
 
         <div class="pagination">
@@ -52,12 +52,5 @@
                 }
             }
         </div>
-    </div>
-
-    <div class="highlight-section">
-        <h2>Nổi Bật</h2>
-        <div class="highlight-item selected">Top 1</div>
-        <div class="highlight-item">Top 2</div>
-        <div class="highlight-item">Top 3</div>
     </div>
 </div>

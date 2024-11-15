@@ -1,8 +1,9 @@
-﻿/* Đặt font chữ cho toàn bộ trang */
+﻿﻿ /* Đặt font chữ cho toàn bộ trang */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Arial, sans-serif; /* Đặt font chữ mặc định là Arial */
 }
 
 /* Khoảng trống phía trên nội dung để không bị header che */
@@ -60,9 +61,9 @@ body {
     margin-top: 20px;
 }
 
-.story-info p {
-    margin: 8px 0;
-}
+    .story-info p {
+        margin: 8px 0;
+    }
 
 /*.follow-btn {
     background-color: #f24e4e;
@@ -83,7 +84,7 @@ body {
     margin-left: 10px;
 }*/
 
-.summary, .comments , .chapter{
+.summary, .comments, .chapter {
     margin-top: 20px;
 }
 
@@ -121,9 +122,9 @@ body {
     margin-top: auto; /* Pushes footer to the bottom */
 }
 
-.end h1 {
-    color: white;
-}
+    .end h1 {
+        color: white;
+    }
 /* CSS cho layout chứa hình ảnh và thông tin */
 .story-container {
     display: flex;
@@ -158,9 +159,9 @@ body {
         word-wrap: break-word; /* Cho phép từ dài được ngắt và xuống dòng */
     }
 
-.story-info p {
-    margin: 5px 0; /* Khoảng cách giữa các đoạn thông tin */
-}
+    .story-info p {
+        margin: 5px 0; /* Khoảng cách giữa các đoạn thông tin */
+    }
 
 .follow-btn {
     background-color: #f24e4e;
@@ -179,9 +180,10 @@ body {
     margin: 5px 0; /* Khoảng cách giữa các mục thông tin */
 }
 
-.story-info .info-item span {
-    margin-right: 10px; /* Khoảng cách giữa icon hoặc chữ và nội dung */
-}
+    .story-info .info-item span {
+        margin-right: 10px; /* Khoảng cách giữa icon hoặc chữ và nội dung */
+    }
+
 .read-btn {
     background-color: #4caf50; /* Màu nền xanh lá */
     color: white; /* Màu chữ trắng */
@@ -192,10 +194,11 @@ body {
     margin-left: 10px;
 }
 
-a{
+a {
     text-decoration: none;
     color: white;
 }
+
 .chapter-item {
     background-color: #C8C2E0; /* Light background for chapter items */
     border: 1px solid #ddd; /* Light gray border */
@@ -218,7 +221,8 @@ a{
         font-size: 18px; /* Font size for chapter title */
         color: #333; /* Dark text color */
     }
-    .chapter-item p{
+
+    .chapter-item p {
         color: #333;
         margin-top: 5px;
     }
@@ -266,12 +270,18 @@ a{
     .btn-secondary:hover {
         background-color: #455a64;
     }
+
 .no-views {
     color: gray; /* Màu chữ xám */
     opacity: 0.9; /* Độ trong suốt 60% */
     font-style: italic; /* In nghiêng để thêm sự khác biệt */
 }
 
+.no-followers {
+    color: gray; /* Màu chữ xám */
+    opacity: 0.9; /* Độ trong suốt 60% */
+    font-style: italic; /* In nghiêng để thêm sự khác biệt */
+}
 /* CSS for the form */
 /*form.fixed-form {
     display: flex;
@@ -281,9 +291,8 @@ a{
     border-radius: 8px;
     width: 100%;
 }*/
-
-    /* Textarea styling */
-    /*form.fixed-form textarea {
+/* Textarea styling */
+/*form.fixed-form textarea {
         padding: 10px;
         border-radius: 8px;
         border: 1px solid #ccc;
@@ -294,9 +303,8 @@ a{
         height: 100px;
         box-sizing: border-box;
     }*/
-
-    /* Submit button styling */
-    /*form.fixed-form button {
+/* Submit button styling */
+/*form.fixed-form button {
         background-color: #4CAF50;
         color: white;
         padding: 10px;
@@ -311,9 +319,6 @@ a{
         form.fixed-form button:hover {
             background-color: #45a049;
         }*/
-
-
-
 /* Container for comments section */
 .comments {
     background-color: #d2cdea; /* Light purple background */
@@ -333,7 +338,7 @@ a{
 }
 /* Login required message styling */
 .comments p {
-    background-color: #f0f0f0; 
+    background-color: #f0f0f0;
     padding: 10px;
     border-radius: 8px;
     color: #666;
@@ -391,6 +396,7 @@ textarea {
     font-size: 14px;
     transition: opacity 0.7s ease-in-out;
 }
+
 .fade {
     opacity: 1;
 }
@@ -425,6 +431,7 @@ textarea {
     margin-bottom: 10px;
     margin-top: 10px;
 }
+
     .comment-item p {
         margin: 0; /* Remove default margin between paragraphs */
         padding: 5px 0; /* Add a small padding for better spacing */
@@ -454,6 +461,7 @@ textarea {
     font-size: 14px;
     color: #666;
 }
+
 .comment-list h4 {
     border-bottom: 1px solid black;
     margin-bottom: 10px;
