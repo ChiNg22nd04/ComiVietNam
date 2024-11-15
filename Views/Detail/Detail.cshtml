@@ -1,4 +1,4 @@
-﻿@model DAPM2.Models.ProductDetailViewModel
+﻿﻿@model DAPM2.Models.ProductDetailViewModel
 @{
     ViewBag.Title = "Detail";
     Layout = "~/Views/Shared/_DetailStoryPage.cshtml";
@@ -47,6 +47,19 @@
                             else
                             {
                                 <em class="no-views">Chưa có lượt xem</em>
+                            }
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span><strong>Lượt theo dõi:</strong></span>
+                        <span>
+                            @if (ViewBag.FollowerCount != null && ViewBag.FollowerCount > 0)
+                            {
+                                @ViewBag.FollowerCount
+                            }
+                            else
+                            {
+                                <em class="no-followers">Chưa có lượt theo dõi</em>
                             }
                         </span>
                     </div>
@@ -276,7 +289,6 @@
         </div>
 </body>
 </html>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 $(document).ready(function () {
@@ -312,4 +324,3 @@ $(document).ready(function () {
     });
 });
 </script>
-

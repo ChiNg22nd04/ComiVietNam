@@ -1,25 +1,25 @@
-﻿
+﻿﻿
 @{
     ViewBag.Title = "AllStory";
     Layout = "~/Views/Shared/_AllStoryLayout.cshtml";
 }
-
+@model DAPM2.Models.CategoryViewModel
 
 <div class="content-container">
     <div class="filter-section">
         <h2>Lọc Truyện</h2>
-        <form method="get" action="@Url.Action("ListStory", "Story")">
+        <form id="filterForm" method="get" action="@Url.Action("ListStory", "Story")">
             <div>
                 <label for="category">Thể loại:</label>
                 <select id="category" name="categoryID">
-                    <option value="">Tất cả</option>
-                    @foreach (var category in Model.categories) // Giả định bạn có một danh sách thể loại trong model
+                    <option value="0">Tất cả</option>
+                    @foreach (var category in Model.categories)
                     {
                         <option value="@category.CategoryID">@category.CategoryName</option>
                     }
                 </select>
             </div>
-            <button type="submit">Lọc</button>
+            <button type="button" onclick="filterStories()">Lọc</button>
         </form>
     </div>
 
@@ -42,7 +42,7 @@
         }
         else
         {
-            <p>Không có truyện trong danh mục này.</p>
+            <p class="no-views">Không có truyện trong danh mục này.</p>
         }
 
         <div class="pagination">
@@ -64,11 +64,23 @@
             }
         </div>
     </div>
-
-    <div class="highlight-section">
-        <h2>Nổi Bật</h2>
-        <div class="highlight-item selected">Top 1</div>
-        <div class="highlight-item">Top 2</div>
-        <div class="highlight-item">Top 3</div>
-    </div>
 </div>
+
+<script>
+    function filterStories() {
+        const categorySelect = document.getElementById("category");
+        const form = document.getElementById("filterForm");
+
+        // Kiểm tra giá trị của categoryID
+        if (categorySelect.value === "0") {
+            // Chuyển hướng đến AllStory nếu categoryID = 0
+            form.action = '@Url.Action("AllStory", "AllStory")';
+        } else {
+            // Giữ nguyên action ban đầu nếu chọn thể loại khác
+            form.action = '@Url.Action("ListStory", "Story")';
+        }
+
+        // Gửi biểu mẫu
+        form.submit();
+    }
+</script>
