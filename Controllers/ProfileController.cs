@@ -135,24 +135,42 @@ namespace DAPM2.Controllers
                 // Kiểm tra xem người dùng có upload ảnh avatar mới không
                 if (AvatarFile != null && AvatarFile.ContentLength > 0)
                 {
-                    var extension = Path.GetExtension(AvatarFile.FileName);
-                    var fileName = $"{user.UserID}_{Path.GetFileNameWithoutExtension(AvatarFile.FileName)}{extension}";
-                    var path = Path.Combine(Server.MapPath("~/Content/images"), fileName);
-                    AvatarFile.SaveAs(path);
-                    existingUser.Avatar = $"/Content/images/{fileName}"; // Cập nhật Avatar mới vào cơ sở dữ liệu
+                    // Kiểm tra định dạng file (chỉ cho phép ảnh)
+                    var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                    var fileExtension = Path.GetExtension(AvatarFile.FileName);
+
+                    if (allowedExtensions.Contains(fileExtension.ToLower()))
+                    {
+                        // Tạo tên file duy nhất dựa trên UserID và thời gian hiện tại để tránh trùng lặp
+                        var fileName = $"{user.UserID}_{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
+                        var path = Path.Combine(Server.MapPath("~/Content/images"), fileName);
+
+                        // Lưu file lên server
+                        AvatarFile.SaveAs(path);
+
+                        // Cập nhật đường dẫn avatar trong cơ sở dữ liệu
+                        existingUser.Avatar = $"/Content/images/{fileName}";
+                    }
+                    else
+                    {
+                        ViewBag.Error = "Chỉ chấp nhận các định dạng ảnh: .jpg, .jpeg, .png, .gif.";
+                        return View(user); // Trả về view cùng thông báo lỗi
+                    }
                 }
 
                 // Lưu lại thông tin thay đổi vào cơ sở dữ liệu
-                database.SaveChanges();  // Đây là bước quan trọng để lưu thông tin vào cơ sở dữ liệu
+                database.SaveChanges();
 
-                // Sau khi lưu thành công vào cơ sở dữ liệu, cập nhật lại session
+                // Cập nhật lại session với thông tin mới
                 Session["FullName"] = existingUser.FullName;
                 Session["Email"] = existingUser.Email;
+                Session["Avatar"] = existingUser.Avatar;
 
                 TempData["SuccessMessage"] = "Cập nhật tài khoản thành công.";
                 return RedirectToAction("ProfileUser"); // Chuyển hướng về trang hồ sơ người dùng
             }
 
+            // Nếu ModelState không hợp lệ, trả về view với thông tin lỗi
             return View(user);
         }
 

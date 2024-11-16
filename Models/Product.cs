@@ -82,6 +82,17 @@ namespace DAPM2.Models
                 }
             }
         }
+
+        public static List<Product> SearchBooksByTitle(string searchTerm)
+        {
+            using (var db = new WebStory2Entities1())
+            {
+                // Tìm kiếm sách dựa trên tiêu đề
+                return db.Products
+                         .Where(p => p.Title.Contains(searchTerm)) // Tìm kiếm theo từ khóa trong tiêu đề
+                         .ToList();
+            }
+        }
     }
 
     public class ProductDetailViewModel
@@ -121,6 +132,7 @@ namespace DAPM2.Models
                 return $"{(int)(timeDifference.TotalDays / 365)} năm trước";
         }
     }
+
 
     public class StoryViewModel
     {

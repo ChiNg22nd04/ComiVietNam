@@ -26,6 +26,16 @@ body {
     color: white;
     font-size: 24px;
 }
+
+.button-search {
+    padding: 5px;
+}
+
+.button-search:hover {
+    cursor: pointer;
+    background: #45a049;
+    border-radius: 50%;
+}
 /* Định dạng cho menu navigation */
 nav {
     display: flex; /* Sử dụng flexbox cho menu */
@@ -71,9 +81,7 @@ nav ul li a {
         transition: border 0.3s ease;
     }
 
-        .search-bar input:focus {
-            border: 1px solid #4CAF50;
-        }
+      
 
     /* Nút kính lúp */
     .search-bar button {
