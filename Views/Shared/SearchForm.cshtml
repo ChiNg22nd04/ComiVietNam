@@ -1,0 +1,8 @@
+﻿@using (Html.BeginForm("SearchBooksByTitle", "Home", FormMethod.Get))
+{
+    <div>
+        <label for="searchTerm">Tìm kiếm sách:</label>
+        <input type="text" name="searchTerm" id="searchTerm" placeholder="Nhập tên sách" />
+    </div>
+    <button type="submit">Tìm kiếm</button>
+}

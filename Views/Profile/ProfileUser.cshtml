@@ -28,7 +28,12 @@
         <h3>Thông Tin Tài Khoản</h3>
         <p><strong>Họ và tên:</strong> @(Model?.FullName ?? "Chưa có thông tin")</p>
         <p><strong>Email:</strong> @(Model?.Email ?? "Chưa có thông tin")</p>
-        <p><strong>Vai trò:</strong> Khách Hàng</p>
+        <p>
+            <strong>Vai trò:</strong>
+            @(Model?.RoleUser != null && Model.RoleUser.Equals("Admin", StringComparison.OrdinalIgnoreCase)
+          ? "Quản Trị Viên"
+          : "Khách Hàng")
+        </p>
         <a class="btn-edit" href="@Url.Action("EditProfile", "Profile", new { id = Model?.UserID })">Chỉnh sửa</a>
     </div>
 

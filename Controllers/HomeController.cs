@@ -63,5 +63,24 @@ namespace DAPM2.Controllers
             return View(stories);
         }
 
+        public ActionResult LiveSearch(string searchTerm)
+        {
+            var stories = database.Products
+                            .Where(s => s.Title.Contains(searchTerm)) // Filter stories containing the search term
+                            .Select(s => new { s.Title, s.ProductID, ImagePath = s.ImageProcductURL }) // Fix the typo here
+                            .ToList();
+            return Json(stories, JsonRequestBehavior.AllowGet); // Return as JSON
+        }
+
+        public ActionResult SearchBooksByTitle(string searchTerm)
+        {
+            // Gọi hàm tìm kiếm từ ProductService
+            var books = ProductService.SearchBooksByTitle(searchTerm);
+
+            // Truyền kết quả vào View
+            return View("SearchBooksByTitle", books); // Hiển thị kết quả trong view Search.cshtml
+        }
+
+
     }
 }

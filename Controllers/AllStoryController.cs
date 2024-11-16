@@ -46,6 +46,17 @@ namespace DAPM2.Controllers
             // Pass the model to the view
             return View(viewModel);
         }
+        public ActionResult SearchBooksByTitle(string searchTerm)
+        {
+            // Gọi hàm tìm kiếm từ ProductService
+            var books = ProductService.SearchBooksByTitle(searchTerm);
+
+            // Lưu trữ danh sách sách tìm được vào TempData để chuyển qua Controller khác
+            TempData["SearchResults"] = books;
+
+            // Chuyển hướng tới Action Search của ProductController
+            return RedirectToAction("SearchBooksByTitle", "Home", new { searchTerm });
+        }
 
     }
 }

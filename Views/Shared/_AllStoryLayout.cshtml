@@ -68,11 +68,11 @@
                     </ul>
                 </nav>
                 <div class="search-bar">
-                    @using (Html.BeginForm("Search", "Home", FormMethod.Get))
+                    @using (Html.BeginForm("SearchBooksByTitle", "Home", FormMethod.Get))
                     {
                         <input class="field" type="text" name="searchTerm" placeholder="Tìm kiếm..." />
-                        <button type="submit">
-                            <img src="~/Content/images/search.png" alt="Search" class="search-icon" />
+                        <button class="button-search" type="submit">
+                            <i class="fa-solid fa-magnifying-glass text-dark" style="font-size: 18px"></i>
                         </button>
                     }
                 </div>
