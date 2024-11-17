@@ -7,6 +7,7 @@ using DAPM2.Models;
 using System.Data.Entity; // Đảm bảo đã bao gồm thư viện này
 using System.IO;
 using System.Web.UI.WebControls;
+using System.Diagnostics;
 
 namespace DAPM2.Controllers
 {
@@ -439,13 +440,22 @@ namespace DAPM2.Controllers
         }
 
         // POST: Admin/ImageStory
+
         [HttpPost]
         public ActionResult ImageStory(int chapterId, ChapterImage chapterImage, int? productId, HttpPostedFileBase imageFile)
         {
             if (ModelState.IsValid)
             {
+                // Log giá trị của chapterId và chapterImage.ImageOrder
+                Debug.WriteLine($"chapterId: {chapterId}");
+                Debug.WriteLine($"ImageOrder: {chapterImage.ImageOrder}");
+
                 if (imageFile != null && imageFile.ContentLength > 0)
                 {
+                    // Log thông tin file ảnh
+                    Debug.WriteLine($"File Name: {imageFile.FileName}");
+                    Debug.WriteLine($"File Size: {imageFile.ContentLength}");
+
                     // Kiểm tra trùng ImageOrder trong cùng ChapterID
                     var existingImage = database.ChapterImages
                         .FirstOrDefault(ci => ci.ChapterID == chapterId && ci.ImageOrder == chapterImage.ImageOrder);
@@ -453,6 +463,8 @@ namespace DAPM2.Controllers
                     if (existingImage != null)
                     {
                         ViewBag.Error = "Thứ tự ảnh đã tồn tại. Vui lòng chọn thứ tự khác.";
+                        // Log lỗi nếu thứ tự ảnh đã tồn tại
+                        Debug.WriteLine("Error: Thứ tự ảnh đã tồn tại.");
                     }
                     else
                     {
@@ -468,30 +480,41 @@ namespace DAPM2.Controllers
                             ImageOrder = chapterImage.ImageOrder,
                             UploadedDate = DateTime.Now
                         };
+
+                        // Log dữ liệu ChapterImage mới
+                        Debug.WriteLine($"New Image: {newImage.ImageID}, {newImage.ChapterID}, {newImage.ImageURL}, {newImage.ImageOrder}, {newImage.UploadedDate}");
+
                         database.ChapterImages.Add(newImage);
                         database.SaveChanges();
 
                         // Kiểm tra productId có tồn tại
                         if (productId.HasValue)
                         {
+                            Debug.WriteLine($"Redirecting to Detail for productId: {productId.Value}");
                             return RedirectToAction("Detail", "Detail", new { id = productId });
                         }
                         else
                         {
-                            return RedirectToAction("Index", "Home"); // Chuyển hướng nếu productId không có
+                            Debug.WriteLine("Redirecting to Index as no productId");
+                            return RedirectToAction("Index", "Home");
                         }
                     }
                 }
                 else
                 {
-                    // Nếu không có ảnh hoặc không hợp lệ, hiển thị thông báo lỗi
                     ViewBag.Error = "Vui lòng chọn một file ảnh hợp lệ.";
+                    // Log lỗi nếu không có file ảnh
+                    Debug.WriteLine("Error: No valid image file provided.");
                 }
             }
 
             // Giữ lại chapterId và productId để hiển thị lại form nếu có lỗi
             ViewBag.ChapterID = chapterId;
             ViewBag.ProductID = productId;
+
+            // Log chapterId và productId khi có lỗi
+            Debug.WriteLine($"Error occurred. chapterId: {chapterId}, productId: {productId}");
+
             return View();
         }
 

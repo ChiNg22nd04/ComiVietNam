@@ -32,7 +32,6 @@
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(model => model.UserID)
 
-                    <!-- Các trường cập nhật thông tin cá nhân -->
                     <div class="form-group">
                         @Html.LabelFor(model => model.FullName)
                         @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
@@ -43,15 +42,6 @@
                         @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
                     </div>
 
-                    <!-- Hiển thị ảnh avatar hiện tại -->
-                    <div class="form-group">
-                        <img src="@(string.IsNullOrEmpty(Model.Avatar)
-                            ? Url.Content("~/Content/images/profile1.png")
-                            : Url.Content(Model.Avatar))"
-                             alt="Avatar" class="" style="width: 10%" />
-                    </div>
-
-                    <!-- Trường upload avatar -->
                     <div class="form-group">
                         <label for="AvatarFile">Avatar</label>
                         <input type="file" name="AvatarFile" class="form-control" />
@@ -59,6 +49,7 @@
 
                     <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
                 }
+
             </div>
         </div>
     </div>

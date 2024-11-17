@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -8,6 +9,7 @@ using System.Text;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using DAPM2.Models;
 
 namespace DAPM2.Controllers
@@ -111,6 +113,10 @@ namespace DAPM2.Controllers
                 return RedirectToAction("ProfileUser");
             }
 
+            Debug.WriteLine($"UserID: {user.UserID}",user);
+            Debug.WriteLine($"Fullname: {user.FullName}");
+
+
             ViewBag.Categories = CategoryService.GetAllCategories();
             return View(user);
         }
@@ -118,61 +124,63 @@ namespace DAPM2.Controllers
         [HttpPost]
         public ActionResult EditProfile(User user, HttpPostedFileBase AvatarFile)
         {
+
+            Debug.WriteLine("ModelStat", ModelState.IsValid);
             if (ModelState.IsValid)
             {
-                // Tìm người dùng trong cơ sở dữ liệu theo UserID
-                var existingUser = database.Users.Find(user.UserID);
-                if (existingUser == null)
-                {
-                    TempData["ErrorMessage"] = "Tài khoản không tồn tại.";
-                    return RedirectToAction("ProfileUser");
-                }
+                // Log user info
+                Debug.WriteLine($"UserID: {user.UserID}");
+                Debug.WriteLine($"FullName: {user.FullName}");
+                Debug.WriteLine($"Email: {user.Email}");
 
-                // Cập nhật các trường thông tin cá nhân
-                existingUser.FullName = user.FullName ?? existingUser.FullName;
-                existingUser.Email = user.Email ?? existingUser.Email;
-
-                // Kiểm tra xem người dùng có upload ảnh avatar mới không
+                // Check for avatar file
                 if (AvatarFile != null && AvatarFile.ContentLength > 0)
                 {
-                    // Kiểm tra định dạng file (chỉ cho phép ảnh)
-                    var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
-                    var fileExtension = Path.GetExtension(AvatarFile.FileName);
+                    Debug.WriteLine($"Avatar File Name: {AvatarFile.FileName}");
+                    Debug.WriteLine($"Avatar File Size: {AvatarFile.ContentLength}");
 
-                    if (allowedExtensions.Contains(fileExtension.ToLower()))
-                    {
-                        // Tạo tên file duy nhất dựa trên UserID và thời gian hiện tại để tránh trùng lặp
-                        var fileName = $"{user.UserID}_{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
-                        var path = Path.Combine(Server.MapPath("~/Content/images"), fileName);
+                    string fileName = Path.GetFileName(AvatarFile.FileName);
+                    string path = Path.Combine(Server.MapPath("~/Content/images/"), fileName);
+                    AvatarFile.SaveAs(path);
 
-                        // Lưu file lên server
-                        AvatarFile.SaveAs(path);
-
-                        // Cập nhật đường dẫn avatar trong cơ sở dữ liệu
-                        existingUser.Avatar = $"/Content/images/{fileName}";
-                    }
-                    else
-                    {
-                        ViewBag.Error = "Chỉ chấp nhận các định dạng ảnh: .jpg, .jpeg, .png, .gif.";
-                        return View(user); // Trả về view cùng thông báo lỗi
-                    }
+                    user.Avatar = "/Content/images/" + fileName;
+                    Debug.WriteLine($"Updated Avatar: {user.Avatar}");
                 }
 
-                // Lưu lại thông tin thay đổi vào cơ sở dữ liệu
-                database.SaveChanges();
+                // Update user in database
+                var existingUser = database.Users.FirstOrDefault(u => u.UserID == user.UserID);
+                if (existingUser != null)
+                {
+                    existingUser.FullName = user.FullName;
+                    existingUser.Email = user.Email;
+                    existingUser.Avatar = user.Avatar ?? existingUser.Avatar;
 
-                // Cập nhật lại session với thông tin mới
-                Session["FullName"] = existingUser.FullName;
-                Session["Email"] = existingUser.Email;
-                Session["Avatar"] = existingUser.Avatar;
+                    database.SaveChanges();
 
-                TempData["SuccessMessage"] = "Cập nhật tài khoản thành công.";
-                return RedirectToAction("ProfileUser"); // Chuyển hướng về trang hồ sơ người dùng
+                    Debug.WriteLine($"Updated User: {existingUser.UserID}, {existingUser.FullName}, {existingUser.Email}, {existingUser.Avatar}");
+
+                    return RedirectToAction("ProfileUser", "Profile", new { userID = user.UserID });
+                }
+                else
+                {
+                    ViewBag.Error = "User not found!";
+                    Debug.WriteLine("Error: User not found.");
+                }
+            }
+            else
+            {
+                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    Debug.WriteLine(error.ErrorMessage);
+                }
             }
 
-            // Nếu ModelState không hợp lệ, trả về view với thông tin lỗi
+            ViewBag.UserID = user.UserID;
+            Debug.WriteLine($"Error occurred. UserID: {user.UserID}");
+
             return View(user);
         }
+
 
         public ActionResult UserComments(int userID)
         {

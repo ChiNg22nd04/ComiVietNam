@@ -32,12 +32,12 @@ namespace DAPM2.Models
         public string Avatar { get; set; }
 
 
-        [Required(ErrorMessage = "Vui lòng nhập mật khẩu.")]
-        [StringLength(100, ErrorMessage = "Mật khẩu phải từ 6 ký tự trở lên.", MinimumLength = 6)]
+        ////[Required(ErrorMessage = "Vui lòng nhập mật khẩu.")]
+        //[StringLength(100, ErrorMessage = "Mật khẩu phải từ 6 ký tự trở lên.", MinimumLength = 6)]
         public string PasswordHash { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng nhập lại mật khẩu.")]
-        [Compare("PasswordHash", ErrorMessage = "Mật khẩu và nhập lại mật khẩu không khớp.")]
+        //[Required(ErrorMessage = "Vui lòng nhập lại mật khẩu.")]
+        //[Compare("PasswordHash", ErrorMessage = "Mật khẩu và nhập lại mật khẩu không khớp.")]
         public string ConfirmPassword { get; set; }
         public string RoleUser { get; set; }
         public Nullable<System.DateTime> RegisteredDate { get; set; }
