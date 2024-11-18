@@ -69,15 +69,15 @@ namespace DAPM2.Models
     {
         public int UserID { get; set; } // ID ng??i dùng hi?n t?i
 
-        [Required(ErrorMessage = "Vui lòng nhập mật khẩu cũ")]
+        //[Required(ErrorMessage = "Vui lòng nhập mật khẩu cũ")]
         public string OldPassword { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng nhập mật khẩu mới.")]
-        [StringLength(100, ErrorMessage = "Mật khẩu mới phải từ 6 ký tự trở lên.", MinimumLength = 6)]
+        //[Required(ErrorMessage = "Vui lòng nhập mật khẩu mới.")]
+        //[StringLength(100, ErrorMessage = "Mật khẩu mới phải từ 6 ký tự trở lên.", MinimumLength = 6)]
         public string NewPassword { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng xác nhận mật khẩu mới.")]
-        [Compare("NewPassword", ErrorMessage = "Mật khẩu mới và xác nhận không khớp.")]
+        //[Required(ErrorMessage = "Vui lòng xác nhận mật khẩu mới.")]
+        //[Compare("NewPassword", ErrorMessage = "Mật khẩu mới và xác nhận không khớp.")]
         public string ConfirmPassword { get; set; }
         public List<Category> categories { get; set; }
     }

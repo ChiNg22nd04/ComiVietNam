@@ -64,26 +64,48 @@ namespace DAPM2.Controllers
             {
                 // Kiểm tra email đã tồn tại hay chưa
                 var check = database.Users.Where(s => s.Email == user.Email).FirstOrDefault();
-                if (check == null)
-                {
-                    // Đặt role mặc định là "KhachHang" khi đăng ký
-                    user.RoleUser = "KhachHang";
-
-                    database.Configuration.ValidateOnSaveEnabled = false;
-                    database.Users.Add(user);
-                    database.SaveChanges();
-                    return RedirectToAction("Login");
-                }
-                else
+                if (check != null)
                 {
                     ViewBag.error = "Email đã tồn tại";
                     return View();
                 }
+
+                // Kiểm tra mật khẩu phải dài ít nhất 8 ký tự và bao gồm cả chữ lẫn số
+                if (!IsValidPassword(user.PasswordHash))
+                {
+                    ViewBag.error = "Mật khẩu phải dài ít nhất 8 ký tự và bao gồm cả chữ lẫn số.";
+                    return View();
+                }
+
+                // Kiểm tra mật khẩu nhập lại
+                if (user.PasswordHash != user.ConfirmPassword)
+                {
+                    ViewBag.error = "Mật khẩu xác nhận không khớp.";
+                    return View();
+                }
+
+                // Đặt role mặc định là "KhachHang" khi đăng ký
+                user.RoleUser = "Khách hàng";
+                user.RegisteredDate = DateTime.Now;
+                database.Configuration.ValidateOnSaveEnabled = false;
+                database.Users.Add(user);
+                database.SaveChanges();
+                return RedirectToAction("Login");
             }
             ViewBag.error = "Vui lòng điền đầy đủ thông tin và thử lại.";
             return View();
         }
 
+        private bool IsValidPassword(string password)
+        {
+            if (password.Length < 8)
+                return false;
+
+            bool hasLetter = password.Any(char.IsLetter);
+            bool hasDigit = password.Any(char.IsDigit);
+
+            return hasLetter && hasDigit;
+        }
 
         public ActionResult Logout(User user)
         {

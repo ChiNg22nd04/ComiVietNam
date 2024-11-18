@@ -73,29 +73,52 @@ namespace DAPM2.Controllers
                 // Kiểm tra xem người dùng có tồn tại không
                 if (user == null)
                 {
-                    ModelState.AddModelError("", "Người dùng không tồn tại.");
-                    return View(model);
+                    TempData["ErrorMessage"] = ("Người dùng không tồn tại.");
+                    return View();
+                }
+
+                // Kiểm tra mật cũ mới có trùng khớp trong data không
+                if (model.OldPassword != user.PasswordHash)
+                {
+                    TempData["ErrorMessage"] = ("Mật khẩu cũ không trùng khớp.");
+                    return View();
+                }
+
+                // Kiểm tra mật khẩu phải dài ít nhất 8 ký tự và bao gồm cả chữ lẫn số
+                if (!IsValidPassword(model.NewPassword))
+                {
+                    TempData["ErrorMessage"] = "Mật khẩu phải dài ít nhất 8 ký tự và bao gồm cả chữ lẫn số.";
+                    return View();
                 }
 
                 // Kiểm tra mật khẩu mới có trùng khớp với xác nhận không
                 if (model.NewPassword != model.ConfirmPassword)
                 {
-                    ModelState.AddModelError("ConfirmPassword", "Mật khẩu mới và xác nhận không khớp.");
-                    return View(model);
+                    TempData["ErrorMessage"] = ("Mật khẩu mới và mật khẩu xác nhận không khớp.");
+                    return View();
                 }
 
                 // Cập nhật mật khẩu mới (không băm)
                 user.PasswordHash = model.NewPassword; // Cập nhật mật khẩu mới trực tiếp
                 database.SaveChanges(); // Lưu thay đổi vào DbContext
-                ViewBag.Message = "Mật khẩu đã được thay đổi thành công!";
+                TempData["SuccessMessage"] = "Mật khẩu đã được cập nhật thành công!";
 
                 // Chuyển hướng sau khi thành công
                 return RedirectToAction("ProfileUser", new { userID = model.UserID });
             }
 
-            return View(model);
+            return View();
         }
+        private bool IsValidPassword(string password)
+        {
+            if (password.Length < 8)
+                return false;
 
+            bool hasLetter = password.Any(char.IsLetter);
+            bool hasDigit = password.Any(char.IsDigit);
+
+            return hasLetter && hasDigit;
+        }
 
         //Chưa sửa xong đổi mật khẩu
         public ActionResult EditProfile(int? id)

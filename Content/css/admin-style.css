@@ -237,7 +237,7 @@ form {
         background-color: #45a049; /* Màu khi hover */
     }
 .back-list {
-    position: fixed; /* Giữ cố định vị trí trên trang */
+    width: max-content; /* Giữ cố định vị trí trên trang */
     color: white; /* Màu chữ trắng */
     background-color: #333; /* Màu nền xanh lá */
     padding: 10px 20px; /* Padding cho nút */
@@ -249,3 +249,31 @@ form {
         color: white; /* Đảm bảo màu chữ của link là màu trắng */
     }
 
+/* Thông báo lỗi */
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* Thông báo thành công */
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* Cải thiện hiển thị */
+.alert {
+    font-size: 16px;
+    margin-top: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
