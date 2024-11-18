@@ -8,6 +8,7 @@
 
 /* Khoảng trống phía trên nội dung để không bị header che */
 body {
+    margin: 0;
     background-color: #f5f5f5; /* Màu nền cho body */
     padding-top: 100px; /* Điều chỉnh để không bị header che khuất nội dung */
 }

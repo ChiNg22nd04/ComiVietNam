@@ -55,32 +55,48 @@ namespace DAPM2.Controllers
             {
                 // Kiểm tra email đã tồn tại hay chưa
                 var check = database.Users.FirstOrDefault(u => u.Email == user.Email);
-                if (check == null)
+                if (check != null)
                 {
-                    var newUser = new User
-                    {
-                        FullName = user.FullName,
-                        UserName = user.UserName,
-                        Email = user.Email,
-                        PasswordHash = user.PasswordHash, // Đảm bảo bạn mã hóa mật khẩu
-                        RoleUser = user.RoleUser, // Gán vai trò
-                        RegisteredDate = DateTime.Now
-                    };
-
-                    database.Users.Add(newUser);
-                    database.SaveChanges();
-
-                    return RedirectToAction("ManageUsers");
+                    ViewBag.error = "Email đã tồn tại.";
+                    return View();
                 }
-                else
+
+                // Kiểm tra mật khẩu phải dài ít nhất 8 ký tự và bao gồm cả chữ lẫn số
+                if (!IsValidPassword(user.PasswordHash))
                 {
-                    ViewBag.Error = "Email đã tồn tại.";
+                    ViewBag.error = "Mật khẩu phải dài ít nhất 8 ký tự và bao gồm cả chữ lẫn số.";
+                    return View();
                 }
+
+                var newUser = new User
+                {
+                    FullName = user.FullName,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    PasswordHash = user.PasswordHash, // Đảm bảo bạn mã hóa mật khẩu
+                    RoleUser = user.RoleUser, // Gán vai trò
+                    RegisteredDate = DateTime.Now
+                };
+
+                database.Users.Add(newUser);
+                database.SaveChanges();
+                TempData["SuccessMessage"] = "Thêm tài khoản thành công.";
+                return RedirectToAction("ManageUsers");
             }
 
-            return View(user);
+            ViewBag.error = "Lỗi";
+            return View();
         }
+        private bool IsValidPassword(string password)
+        {
+            if (password.Length < 8)
+                return false;
 
+            bool hasLetter = password.Any(char.IsLetter);
+            bool hasDigit = password.Any(char.IsDigit);
+
+            return hasLetter && hasDigit;
+        }
         public ActionResult DeleteUser()
         {
             return View();
@@ -127,8 +143,23 @@ namespace DAPM2.Controllers
                 var existingUser = database.Users.Find(user.UserID);
                 if (existingUser == null)
                 {
-                    TempData["ErrorMessage"] = "Tài khoản không tồn tại.";
+                    ViewBag.error = "Tài khoản không tồn tại.";
                     return RedirectToAction("ManageUsers");
+                }
+
+                // Kiểm tra email đã tồn tại hay chưa
+                var check = database.Users.FirstOrDefault(u => u.Email == user.Email);
+                if (check == null)
+                {
+                    ViewBag.error = "Email đã tồn tại.";
+                    return View();
+                }
+
+                // Kiểm tra mật khẩu phải dài ít nhất 8 ký tự và bao gồm cả chữ lẫn số
+                if (!IsValidPassword(user.PasswordHash))
+                {
+                    ViewBag.error = "Mật khẩu phải dài ít nhất 8 ký tự và bao gồm cả chữ lẫn số.";
+                    return View();
                 }
 
                 // Cập nhật các thuộc tính
@@ -138,10 +169,11 @@ namespace DAPM2.Controllers
                 existingUser.PasswordHash = user.PasswordHash;
                 existingUser.RoleUser = user.RoleUser;
                 database.SaveChanges();
+                TempData["SuccessMessage"] = "Cập nhật tài khoản thành công.";
                 return RedirectToAction("ManageUsers");
             }
 
-            return View(user);
+            return View();
         }
 
 
