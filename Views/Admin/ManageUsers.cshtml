@@ -2,15 +2,16 @@
     ViewBag.Title = "ManageUsers";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
-<h2>Quản Lý Người Dùng</h2>
+@model DAPM2.Models.ManageUsersViewModel
+<h2>Quản Lý Tài Khoản</h2>
 
 <!-- Nút thêm người dùng mới -->
 <div class="add-user">
     <a href="@Url.Action("AddUser", "Admin")" class="btn btn-add">Thêm Người Dùng Mới</a>
 </div>
 
-<!-- Bảng hiển thị danh sách người dùng -->
+<!-- Bảng hiển thị danh sách người dùng là Admin -->
+<h3>Danh sách tài khoản quản trị viên</h3>
 <table class="user-table">
     <thead>
         <tr>
@@ -23,18 +24,53 @@
         </tr>
     </thead>
     <tbody>
-        @* Giả sử bạn có một Model danh sách người dùng *@
-        @for (int i = 0; i < Model.Users.Count; i++)
+        @{
+            var admins = Model.Users.Where(u => u.RoleUser == "Admin").ToList();
+        }
+        @for (int i = 0; i < admins.Count; i++)
         {
             <tr>
                 <td>@(i + 1)</td>
-                <td>@Model.Users[i].FullName</td>
-                <td>@Model.Users[i].UserName</td>
-                <td>@Model.Users[i].Email</td>
-                <td>@Model.Users[i].RoleUser</td>
+                <td>@admins[i].FullName</td>
+                <td>@admins[i].UserName</td>
+                <td>@admins[i].Email</td>
+                <td>@admins[i].RoleUser</td>
                 <td>
-                    <a href="@Url.Action("EditUser", "Admin", new { id = Model.Users[i].UserID })" class="btn btn-edit">Sửa</a>
-                    <a href="@Url.Action("DeleteUser", "Admin", new { id = Model.Users[i].UserID })" class="btn btn-delete" onclick="return confirm('Bạn có chắc muốn xóa người dùng này không?')">Xóa</a>
+                    <a href="@Url.Action("EditUser", "Admin", new { id = admins[i].UserID })" class="btn btn-edit">Sửa</a>
+                    <a href="@Url.Action("DeleteUser", "Admin", new { id = admins[i].UserID })" class="btn btn-delete" onclick="return confirm('Bạn có chắc muốn xóa người dùng này không?')">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Danh sách tài khoản khách hàng</h3>
+<table class="user-table">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Tên Người Dùng</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Vai Trò</th>
+            <th>Thao Tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var nonAdmins = Model.Users.Where(u => u.RoleUser != "Admin").ToList();
+        }
+        @for (int i = 0; i < nonAdmins.Count; i++)
+        {
+            <tr>
+                <td>@(i + 1)</td>
+                <td>@nonAdmins[i].FullName</td>
+                <td>@nonAdmins[i].UserName</td>
+                <td>@nonAdmins[i].Email</td>
+                <td>Khách hàng</td>
+                <td>
+                    <a href="@Url.Action("EditUser", "Admin", new { id = nonAdmins[i].UserID })" class="btn btn-edit">Sửa</a>
+                    <a href="@Url.Action("DeleteUser", "Admin", new { id = nonAdmins[i].UserID })" class="btn btn-delete" onclick="return confirm('Bạn có chắc muốn xóa người dùng này không?')">Xóa</a>
                 </td>
             </tr>
         }

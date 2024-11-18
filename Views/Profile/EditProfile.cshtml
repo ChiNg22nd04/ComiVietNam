@@ -15,8 +15,8 @@
             <p class="account-title" style="color: #333">@Model.FullName</p>
         </div>
         <ul class="account-info">
+            <li><a href="@Url.Action("ProfileUser", "Profile")">Thông tin tài khoản</a></li>
             <li><a href="@Url.Action("UserComments", "Profile", new { userID = Model.UserID })">Bình luận</a></li>
-            <li><a href="#">Thông báo</a></li>
             <li><a href="@Url.Action("ChangePassword", "Profile", new { userID = Model.UserID })">Đổi mật khẩu</a></li>
             <li><a href="@Url.Action("Logout", "Login")">Thoát</a></li>
         </ul>

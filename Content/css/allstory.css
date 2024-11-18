@@ -13,6 +13,7 @@ a {
 
 /* Khoảng trống phía trên nội dung để không bị header che */
 body {
+    margin: 0;
     padding-top: 80px; /* Điều chỉnh để không bị header che khuất nội dung */
 }
 

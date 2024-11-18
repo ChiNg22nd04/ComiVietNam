@@ -23,6 +23,7 @@ namespace DAPM2.Models
         public int ReviewID { get; set; }
         public Nullable<int> UserID { get; set; }
         public Nullable<int> ProductID { get; set; }
+        public string Title { get; set; } // Title of the review
         public Nullable<int> ParentReviewID { get; set; }
         public string Comment { get; set; }
         public Nullable<System.DateTime> ReviewDate { get; set; }
@@ -33,10 +34,16 @@ namespace DAPM2.Models
         public virtual ICollection<UserReview> UserReviews1 { get; set; }
         public virtual UserReview UserReview1 { get; set; }
 
+        // Computed property to get the Product Title
+        public string ProductTitle => Product?.Title ?? "Sản phẩm không tồn tại";
+
+
     }
     public class CommentViewModel
     {
         public int? ProductID { get; set; }
+        public string Title { get; set; }
+
         public string Comment { get; set; }
         public DateTime ReviewDate { get; set; } = DateTime.Now;
         public int UserID { get; set; } // Dành cho người dùng đã đăng nhập

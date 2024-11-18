@@ -9,17 +9,6 @@ a {
     text-decoration: none; /* Bỏ gạch chân cho tất cả các đường link */
 }
 
-/* CSS cho header */
-header {
-    background-color: black;
-    padding: 20px;
-    width: 100vw;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    transition: top 0.3s ease; /* Thêm chuyển tiếp để ẩn hiện mượt */
-}
 
 /* Khoảng trống phía trên nội dung để không bị header che */
 body {
@@ -104,11 +93,6 @@ body {
     padding: 20px; /* Padding cho nội dung */
 }
 
-footer {
-    background-color: black;
-    padding: 50px;
-    margin-top: auto; /* Pushes footer to the bottom */
-}
 
 .end h1 {
     color: white;

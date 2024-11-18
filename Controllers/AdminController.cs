@@ -36,6 +36,7 @@ namespace DAPM2.Controllers
             };
             return View(model);
         }
+
         // Hàm giả định để lấy dữ liệu người dùng từ database
         private List<User> GetUsersFromDatabase()
         {
