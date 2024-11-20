@@ -9,78 +9,89 @@ namespace DAPM2.Controllers
 {
     public class HomeController : Controller
     {
+        // Khởi tạo đối tượng kết nối cơ sở dữ liệu
         WebStory2Entities1 database = new WebStory2Entities1();
 
+        // Phương thức xử lý cho trang chủ
         public ActionResult Index()
         {
-            // Lấy các thể loại từ cơ sở dữ liệu
+            // Lấy danh sách tất cả các danh mục từ cơ sở dữ liệu
             var categories = database.Categories.ToList();
-            var products = database.Products.ToList(); // Lấy danh sách sản phẩm
 
+            // Lấy danh sách tất cả sản phẩm (stories) từ cơ sở dữ liệu
+            var products = database.Products.ToList();
 
-            // Lấy danh sách sản phẩm sắp xếp theo lượt xem giảm dần
-            // Lấy danh sách sản phẩm có lượt xem > 0 và sắp xếp theo lượt xem giảm dần
+            // Lấy danh sách sản phẩm nổi bật (có ViewCount > 0), sắp xếp giảm dần theo ViewCount
             var featuredStories = database.Products
-                                          .Where(p => p.ViewCount > 0) // Chỉ lấy các sản phẩm có lượt xem
+                                          .Where(p => p.ViewCount > 0)
                                           .OrderByDescending(p => p.ViewCount)
                                           .ToList();
+
+            // Lấy danh sách sản phẩm được xem nhiều nhất, sắp xếp giảm dần theo ViewCount
             var mostViewedStories = database.Products
                                 .OrderByDescending(p => p.ViewCount)
                                 .ToList();
 
-            // Lấy danh sách truyện mới được thêm, sắp xếp theo thời gian tạo giảm dần
+            // Lấy danh sách sản phẩm mới được thêm, sắp xếp giảm dần theo CreatedAt
             var recentlyAddedStories = database.Products
                                                .OrderByDescending(p => p.CreatedAt)
                                                .ToList();
 
-            // Lấy danh sách truyện đã được cập nhật chương mới nhất
+            // Lấy danh sách sản phẩm mới được cập nhật, sắp xếp theo ngày cập nhật mới nhất
             var recentlyUpdatedStories = database.UpdateChapters
-                                                  .GroupBy(uc => uc.ProductID)
-                                                  .Select(g => g.OrderByDescending(uc => uc.DateAdded).FirstOrDefault())
-                                                  .Where(uc => uc != null)
-                                                  .Select(uc => uc.Product)
-                                                  .OrderByDescending(p => p.UpdateChapters.Max(uc => uc.DateAdded)) // Sắp xếp theo ngày cập nhật mới nhất
+                                                  .GroupBy(uc => uc.ProductID) // Gom nhóm theo ProductID
+                                                  .Select(g => g.OrderByDescending(uc => uc.DateAdded).FirstOrDefault()) // Lấy bản ghi mới nhất trong nhóm
+                                                  .Where(uc => uc != null) // Loại bỏ các bản ghi null
+                                                  .Select(uc => uc.Product) // Lấy sản phẩm tương ứng
+                                                  .OrderByDescending(p => p.UpdateChapters.Max(uc => uc.DateAdded)) // Sắp xếp giảm dần theo ngày cập nhật mới nhất
                                                   .ToList();
 
-            // Truyền các thể loại vào view model
+            // Tạo view model để truyền dữ liệu vào view
             var viewModel = new CategoryViewModel
             {
-                categories = categories,
-                products = featuredStories, // Chỉ nếu cần thiết, nếu không chỉ lấy sản phẩm cho tìm kiếm
-                recentlyAddedStories = recentlyAddedStories,
-                mostViewedStories = mostViewedStories,
-                recentlyUpdatedStories = recentlyUpdatedStories
+                categories = categories, // Danh sách danh mục
+                products = featuredStories, // Danh sách sản phẩm nổi bật
+                recentlyAddedStories = recentlyAddedStories, // Sản phẩm mới thêm
+                mostViewedStories = mostViewedStories, // Sản phẩm được xem nhiều nhất
+                recentlyUpdatedStories = recentlyUpdatedStories // Sản phẩm được cập nhật gần đây
             };
 
+            // Trả về view cùng với view model
             return View(viewModel);
         }
+
+        // Phương thức hiển thị danh sách stories theo danh mục
         public ActionResult CategoryStories(int categoryID)
         {
-            // Lấy các câu chuyện dựa trên ID thể loại
+            // Lấy danh sách stories theo CategoryID
             var stories = database.Products.Where(s => s.CategoryID == categoryID).ToList();
 
-            // Truyền các câu chuyện vào view
+            // Trả về view cùng với danh sách stories
             return View(stories);
         }
 
+        // Phương thức thực hiện live search (tìm kiếm theo thời gian thực)
         public ActionResult LiveSearch(string searchTerm)
         {
+            // Tìm kiếm sản phẩm theo từ khóa trong Title
             var stories = database.Products
-                            .Where(s => s.Title.Contains(searchTerm)) // Filter stories containing the search term
-                            .Select(s => new { s.Title, s.ProductID, ImagePath = s.ImageProcductURL }) // Fix the typo here
+                            .Where(s => s.Title.Contains(searchTerm)) // Tìm theo Title
+                            .Select(s => new { s.Title, s.ProductID, ImagePath = s.ImageProcductURL }) // Chọn các trường cần thiết
                             .ToList();
-            return Json(stories, JsonRequestBehavior.AllowGet); // Return as JSON
+
+            // Trả về kết quả dưới dạng JSON để dùng cho AJAX
+            return Json(stories, JsonRequestBehavior.AllowGet);
         }
 
+        // Phương thức tìm kiếm sách theo tiêu đề
         public ActionResult SearchBooksByTitle(string searchTerm)
         {
-            // Gọi hàm tìm kiếm từ ProductService
+            // Gọi service để tìm kiếm sách theo Title
             var books = ProductService.SearchBooksByTitle(searchTerm);
 
-            // Truyền kết quả vào View
-            return View("SearchBooksByTitle", books); // Hiển thị kết quả trong view Search.cshtml
+            // Trả về view "SearchBooksByTitle" cùng với danh sách sách tìm được
+            return View("SearchBooksByTitle", books);
         }
-
-
     }
+
 }

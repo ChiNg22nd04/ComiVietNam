@@ -194,7 +194,6 @@ nav ul {
 @media (max-width: 768px) {
     .dropdown-menu {
         max-width: 90vw;
-        column-count: 2 !important;
     }
 }
 
@@ -235,3 +234,96 @@ nav ul {
     .user-dropdown:hover .dropdown-menu {
         display: block;
     }
+
+
+
+   /* responsive*/
+
+@media (max-width: 767.98px) {
+    /*IP 12PRO*/
+
+    nav ul li a {
+        color: white;
+        text-decoration: none;
+        font-size: 12px;
+    }
+    .search-bar {
+        width: 100%;
+    }
+    .search-bar input {
+        width: 80%;
+        height: auto;
+        font-size: 12px;
+    }
+        .search-bar form {
+            flex: 1;
+            display: flex;
+            margin: 5px;
+            justify-content: center;
+        }
+        .button-search {
+            padding: 0;
+        }
+            button i {
+                font-size: 16px !important;
+                margin-left: 5px;
+            }
+
+        .margin-right {
+            margin-right: 15px;
+        }
+
+    div.header-container img {
+        display: none;
+    }
+
+    .header-container {
+        flex-direction: column;
+    }
+
+    div nav{
+        padding-top: 10px;
+        width: 100%;
+    }
+    div nav ul {
+        flex: 1;
+        justify-content: space-between;
+    }
+        div nav ul:first-child {
+           margin-left: 15px;
+        }
+
+    nav.reg {
+        padding: 0 0 10px 0;
+    }
+
+    
+ 
+}
+
+@media (min-width: 768px) and (max-width: 1199.98px) {
+/* MAC AIR MAC PRO*/
+    nav ul li a {
+        color: white;
+        text-decoration: none;
+        font-size: 15px;
+    }
+    .search-bar input {
+        width: 195px;
+        height: 30px;
+    }
+    .margin-right {
+        margin-right: 15px;
+    }
+    div.header-container img {
+        margin-left: 0 !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    nav ul li a {
+        color: white;
+        text-decoration: none;
+        font-size: 20px;
+    }
+}
