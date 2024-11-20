@@ -41,12 +41,15 @@ namespace DAPM2.Models
     }
     public class CommentViewModel
     {
-        public int? ProductID { get; set; }
-        public string Title { get; set; }
+        public int? ReviewID { get; set; }
 
+        public int? ProductID { get; set; }
+        public string ProductName { get; set; } // Tên sản phẩm
+        public string Title { get; set; }
         public string Comment { get; set; }
         public DateTime ReviewDate { get; set; } = DateTime.Now;
         public int UserID { get; set; } // Dành cho người dùng đã đăng nhập
+        public string UserName { get; set; } // Tên người dùng
         public virtual User User { get; set; } // Liên kết đến User để lấy FullName
         public int? ParentReviewID { get; set; }
     }

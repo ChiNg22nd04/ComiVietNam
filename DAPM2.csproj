@@ -476,6 +476,7 @@
     <Content Include="Views\Profile\UserReview.cshtml" />
     <Content Include="Views\Shared\SearchForm.cshtml" />
     <Content Include="Views\Home\SearchBooksByTitle.cshtml" />
+    <Content Include="Views\Admin\ManageReviews.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

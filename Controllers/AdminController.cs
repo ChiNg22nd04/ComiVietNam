@@ -199,6 +199,14 @@ namespace DAPM2.Controllers
             return stories;
         }
 
+
+        private List<UserReview> UserReviews() // Đảm bảo kiểu trả về là List<Story>
+        {
+            // Lấy danh sách truyện cùng với thể loại từ cơ sở dữ liệu
+            var data = database.UserReviews.Include(p => p.Comment).ToList(); // Thay "Include("Category")" bằng lambda
+            return data;
+        }
+
         public ActionResult AddStory()
         {
             // Lấy danh sách các thể loại từ database
@@ -615,5 +623,114 @@ namespace DAPM2.Controllers
 
             return View(chapter);
         }
+
+        // Trang Quản Lý Đánh Giá
+        public ActionResult ManageReviews()
+        {
+            // Lấy danh sách đánh giá từ cơ sở dữ liệu
+            var reviews = GetAllReviews();
+
+            var model = reviews.Select(r => new CommentViewModel
+            {
+                ReviewID = r.ReviewID,
+                ProductID = r.ProductID,
+                Title = r.Title,
+                Comment = r.Comment,
+                ReviewDate = r.ReviewDate ?? DateTime.Now,
+                UserID = r.UserID ?? 0,
+                User = r.User,
+                ParentReviewID = r.ParentReviewID,
+
+                // Bổ sung thông tin lấy từ UserReview
+                ProductName = r.Product?.Title ?? "Sản phẩm không tồn tại",
+                UserName = r.User?.FullName ?? "Người dùng không tồn tại"
+            }).ToList();
+
+            return View(model);
+        }
+
+        private List<UserReview> GetAllReviews()
+        {
+            // Lấy danh sách đánh giá từ cơ sở dữ liệu
+            var reviews = database.UserReviews.Include("Product").Include("User").ToList();
+            return reviews;
+        }
+
+
+        // Thêm đánh giá
+        public ActionResult AddReview()
+        {
+            return View();
+        }
+
+      
+        // Xóa đánh giá
+        [HttpGet]
+        public ActionResult DeleteReview(int id)
+        {
+            var review = database.UserReviews.Find(id);
+            if (review == null)
+            {
+                TempData["ErrorMessage"] = "Đánh giá không tồn tại.";
+                return RedirectToAction("ManageReviews");
+            }
+
+            database.UserReviews.Remove(review);
+            database.SaveChanges();
+
+            return RedirectToAction("ManageReviews");
+        }
+
+        // Sửa đánh giá
+        public ActionResult EditReview(int id)
+        {
+            var review = database.UserReviews.Find(id);
+            if (review == null)
+            {
+                TempData["ErrorMessage"] = "Đánh giá không tồn tại.";
+                return RedirectToAction("ManageReviews");
+            }
+
+            var model = new CommentViewModel
+            {
+                ProductID = review.ProductID,
+                Title = review.Title,
+                Comment = review.Comment,
+                ReviewDate = review.ReviewDate ?? DateTime.Now,
+                UserID = review.UserID ?? 0,
+                ParentReviewID = review.ParentReviewID
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult EditReview(CommentViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var existingReview = database.UserReviews.Find(model.ProductID);
+                if (existingReview == null)
+                {
+                    TempData["ErrorMessage"] = "Đánh giá không tồn tại.";
+                    return RedirectToAction("ManageReviews");
+                }
+
+                // Cập nhật các thuộc tính
+                existingReview.ProductID = model.ProductID;
+                existingReview.Title = model.Title;
+                existingReview.Comment = model.Comment;
+                existingReview.ReviewDate = model.ReviewDate;
+                existingReview.ParentReviewID = model.ParentReviewID;
+
+                database.SaveChanges();
+
+                return RedirectToAction("ManageReviews");
+            }
+
+            return View(model);
+        }
+
+
     }
 }

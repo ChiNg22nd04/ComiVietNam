@@ -1,0 +1,51 @@
+﻿@model List<DAPM2.Models.CommentViewModel>
+@{
+    ViewBag.Title = "ManageReviews";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<h2>Quản Lý Đánh Giá</h2>
+
+<table class="user-table">
+    <thead>
+        <tr>
+            <th>Mã sách</th>
+            <th>Tên sách</th>
+            <th>Người dùng</th>
+            <th>Nội dung</th>
+            <th>Ngày đánh giá</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var review in Model)
+        {
+            <tr>
+                <td>@review.ProductID</td>
+                <td>@review.ProductName</td>
+                <td>@review.UserName</td>
+                <td>@review.Comment</td>
+                <td>@review.ReviewDate.ToString("dd/MM/yyyy")</td>
+                <td>
+                    @Html.ActionLink("Xóa", "DeleteReview", new { id = review.ReviewID }, new { @class = "btn btn-delete", onclick = "return confirm('Bạn có chắc muốn xóa đánh giá này không?');" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<style>
+    .btn-delete {
+    color: #fff;
+    background-color: #dc3545;
+    border: none;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+}
+
+</style>
