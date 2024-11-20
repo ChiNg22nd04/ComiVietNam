@@ -9,7 +9,6 @@
 
 /* Khoảng trống phía trên nội dung để không bị header che */
 body {
-    overflow: hidden;
     padding-top: 40px; /* Điều chỉnh để không bị header che khuất nội dung */
 }
 
